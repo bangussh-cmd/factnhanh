@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sự Thật Nhanh - Sửa Lỗi Âm Thanh</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', sans-serif; }
+        body, html { height: 100%; overflow: hidden; background: #000; }
+
+        #bg-image {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background-size: cover; background-position: center;
+            transition: background-image 0.5s ease-in-out; z-index: 1;
+        }
+
+        .overlay {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.5); z-index: 2;
+        }
+
+        .container {
+            position: relative; z-index: 3; height: 100%;
+            display: flex; flex-direction: column; justify-content: center; align-items: center;
+            padding: 20px; text-align: center;
+        }
+
+        .fact-box {
+            background: rgba(255, 255, 255, 0.12);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 40px; border-radius: 24px;
+            max-width: 600px; width: 100%; color: white;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
+            margin-bottom: 30px; position: relative;
+        }
+
+        .fact-box h2 {
+            font-size: 1.4rem; margin-bottom: 20px;
+            text-transform: uppercase; letter-spacing: 2px; color: #ffd700;
+        }
+
+        .fact-box p { font-size: 1.25rem; line-height: 1.6; min-height: 100px; }
+
+        .action-header {
+            position: absolute; top: 15px; right: 20px;
+            display: flex; gap: 10px; align-items: center;
+        }
+
+        .lang-btn {
+            background: rgba(255, 255, 255, 0.2); border: 1px solid rgba(255, 255, 255, 0.3);
+            color: white; padding: 6px 12px; font-size: 0.85rem;
+            border-radius: 20px; cursor: pointer; transition: 0.2s;
+        }
+        .lang-btn:hover { background: rgba(255, 255, 255, 0.4); }
+
+        .heart-btn {
+            background: rgba(255, 255, 255, 0.2); border: 1px solid rgba(255, 255, 255, 0.3);
+            color: white; width: 32px; height: 32px; font-size: 1rem;
+            border-radius: 50%; cursor: pointer; transition: transform 0.2s, background 0.2s;
+            display: flex; align-items: center; justify-content: center;
+        }
+        .heart-btn.liked {
+            background: rgba(233, 30, 99, 0.2); border-color: #e91e63; color: #ff4081; transform: scale(1.1);
+        }
+        .heart-btn:active { transform: scale(0.9); }
+
+        .next-btn {
+            background: #00bcd4; color: white; border: none;
+            padding: 16px 40px; font-size: 1.1rem; font-weight: bold;
+            border-radius: 50px; cursor: pointer;
+            box-shadow: 0 4px 20px rgba(0, 188, 212, 0.4);
+            transition: transform 0.2s, background 0.2s;
+        }
+        .next-btn:hover { background: #00acc1; transform: scale(1.05); }
+    </style>
+</head>
+<body>
+
+    <div id="bg-image"></div>
+    <div class="overlay"></div>
+
+    <div class="container">
+        <div class="fact-box">
+            <div class="action-header">
+                <button id="heart-icon" class="heart-btn" onclick="toggleLike()">♥</button>
+                <button class="lang-btn" onclick="toggleLanguage()">🇬🇧 Translate</button>
+            </div>
+            <h2 id="title-text">Bạn có biết?</h2>
+            <p id="fact-text">Đang tải...</p>
+        </div>
+        <button class="next-btn" onclick="handleNextClick()">Câu chuyện tiếp theo →</button>
+    </div>
+
+    <script>
+        // HÀM TẠO ÂM THANH BẰNG CODE (Không cần file mp3/wav)
+        function playBeep(type) {
+            try {
+                // Khởi tạo trình quản lý âm thanh của hệ thống trình duyệt
+                const AudioContext = window.AudioContext || window.webkitAudioContext;
+                const ctx = new AudioContext();
+                const osc = ctx.createOscillator();
+                const gain = ctx.createGain();
+                
+                osc.connect(gain);
+                gain.connect(ctx.destination);
+
+                if (type === 'pop') {
+                    // Tiếng Bốp nhẹ khi chuyển câu
+                    osc.type = 'sine';
+                    osc.frequency.setValueAtTime(400, ctx.currentTime);
+                    osc.frequency.exponentialRampToValueAtTime(100, ctx.currentTime + 0.15);
+                    gain.gain.setValueAtTime(0.3, ctx.currentTime);
+                    gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.15);
+                    osc.start();
+                    osc.stop(ctx.currentTime + 0.15);
+                } else if (type === 'ting') {
+                    // Tiếng Ting trong trẻo khi dịch ngôn ngữ
+                    osc.type = 'sine';
+                    osc.frequency.setValueAtTime(800, ctx.currentTime);
+                    osc.frequency.exponentialRampToValueAtTime(1200, ctx.currentTime + 0.08);
+                    gain.gain.setValueAtTime(0.2, ctx.currentTime);
+                    gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.15);
+                    osc.start();
+                    osc.stop(ctx.currentTime + 0.15);
+                } else if (type === 'like') {
+                    // Tiếng bíp vui tai khi thả tim
+                    osc.type = 'triangle';
+                    osc.frequency.setValueAtTime(500, ctx.currentTime);
+                    osc.frequency.setValueAtTime(900, ctx.currentTime + 0.05);
+                    gain.gain.setValueAtTime(0.2, ctx.currentTime);
+                    gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.2);
+                    osc.start();
+                    osc.stop(ctx.currentTime + 0.2);
+                }
+            } catch (e) {
+                console.log("Trình duyệt chặn âm thanh tự động: ", e);
+            }
+        }
+
+        const dataStorage = [
+            {
+                id: 1,
+                vi: "Mật ong là thực phẩm duy nhất trên thế giới không bao giờ bị hỏng. Các nhà khảo cổ đã tìm thấy những hũ mật ong 3.000 năm tuổi trong mộ cổ Ai Cập mà vẫn có thể ăn được.",
+                en: "Honey is the only food in the world that never spoils. Archaeologists have found 3,000-year-old pots of honey in ancient Egyptian tombs that are still perfectly edible.",
+                image: "https://images.unsplash.com/photo-1600577916048-804c9191e36c?w=1200"
+            },
+            {
+                id: 2,
+                vi: "Tháp Eiffel ở Paris có thể cao thêm khoảng 15 cm vào mùa hè do hiện tượng nở vì nhiệt của cấu trúc sắt khi thời tiết nắng nóng.",
+                en: "The Eiffel Tower in Paris can grow about 15 cm taller during the summer due to thermal expansion, causing the iron structure to expand in the heat.",
+                image: "https://images.unsplash.com/photo-1502602898657-3e91760cbb34?w=1200"
+            },
+            {
+                id: 3,
+                vi: "Một ngày trên sao Kim dài hơn cả một năm của chính nó. Sao Kim mất 243 ngày Trái Đất để quay hết 1 vòng quanh trục, nhưng chỉ mất 225 ngày để đi hết 1 vòng quanh Mặt Trời.",
+                en: "A day on Venus is longer than a year. Venus takes 243 Earth days to rotate once on its axis, but only 225 Earth days to complete one orbit around the Sun.",
+                image: "https://images.unsplash.com/photo-1614313913007-2b4ae8ce32d6?w=1200"
+            }
+        ];
+
+        let currentFact = null;
+        let currentLang = 'vi';
+
+        function getRandomFact() {
+            const randomIndex = Math.floor(Math.random() * dataStorage.length);
+            currentFact = dataStorage[randomIndex];
+            currentLang = 'vi'; 
+            updateUI();
+        }
+
+        function handleNextClick() {
+            playBeep('pop'); // Kích hoạt tiếng Pop bằng code
+            getRandomFact();
+        }
+
+        function updateUI() {
+            if (!currentFact) return;
+            
+            if (currentLang === 'vi') {
+                document.getElementById("title-text").innerText = "Bạn có biết?";
+                document.getElementById("fact-text").innerText = currentFact.vi;
+                document.querySelector(".lang-btn").innerText = "🇬🇧 Translate";
+            } else {
+                document.getElementById("title-text").innerText = "Did you know?";
+                document.getElementById("fact-text").innerText = currentFact.en;
+                document.querySelector(".lang-btn").innerText = "🇻🇳 Tiếng Việt";
+            }
+            
+            document.getElementById("bg-image").style.backgroundImage = `url('${currentFact.image}')`;
+
+            const savedLikes = JSON.parse(localStorage.getItem('likedFacts')) || [];
+            const heartBtn = document.getElementById("heart-icon");
+            if (savedLikes.includes(currentFact.id)) {
+                heartBtn.classList.add("liked");
+            } else {
+                heartBtn.classList.remove("liked");
+            }
+        }
+
+        function toggleLanguage() {
+            playBeep('ting'); // Kích hoạt tiếng Ting bằng code
+            currentLang = (currentLang === 'vi') ? 'en' : 'vi';
+            updateUI();
+        }
+
+        function toggleLike() {
+            if (!currentFact) return;
+            
+            playBeep('like'); // Kích hoạt tiếng Chíp bằng code
+
+            let savedLikes = JSON.parse(localStorage.getItem('likedFacts')) || [];
+            const heartBtn = document.getElementById("heart-icon");
+
+            if (savedLikes.includes(currentFact.id)) {
+                savedLikes = savedLikes.filter(id => id !== currentFact.id);
+                heartBtn.classList.remove("liked");
+            } else {
+                savedLikes.push(currentFact.id);
+                heartBtn.classList.add("liked");
+            }
+
+            localStorage.setItem('likedFacts', JSON.stringify(savedLikes));
+        }
+
+        window.onload = getRandomFact;
+    </script>
+</body>
+</html>
