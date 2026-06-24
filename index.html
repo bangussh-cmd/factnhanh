@@ -230,3 +230,268 @@
     </script>
 </body>
 </html>
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FactNhanh - Sự Thật Song Ngữ</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', sans-serif; }
+        body, html { height: 100%; overflow: hidden; background: #000; }
+
+        #bg-image {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background-size: cover; background-position: center;
+            transition: background-image 0.5s ease-in-out; z-index: 1;
+        }
+
+        .overlay {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.5); z-index: 2;
+        }
+
+        .container {
+            position: relative; z-index: 3; height: 100%;
+            display: flex; flex-direction: column; justify-content: center; align-items: center;
+            padding: 20px; text-align: center;
+        }
+
+        .fact-box {
+            background: rgba(255, 255, 255, 0.12);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 35px 25px; border-radius: 24px;
+            max-width: 600px; width: 100%; color: white;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
+            margin-bottom: 25px; position: relative;
+        }
+
+        .fact-box h2 {
+            font-size: 1.3rem; margin-bottom: 15px;
+            text-transform: uppercase; letter-spacing: 2px; color: #ffd700;
+        }
+
+        .fact-box p { font-size: 1.15rem; line-height: 1.6; min-height: 110px; display: flex; align-items: center; justify-content: center; }
+
+        .action-header {
+            position: absolute; top: 15px; right: 20px;
+            display: flex; gap: 10px; align-items: center;
+        }
+
+        .lang-btn {
+            background: rgba(255, 255, 255, 0.2); border: 1px solid rgba(255, 255, 255, 0.3);
+            color: white; padding: 6px 12px; font-size: 0.85rem;
+            border-radius: 20px; cursor: pointer; transition: 0.2s;
+        }
+        .lang-btn:hover { background: rgba(255, 255, 255, 0.4); }
+
+        .heart-btn {
+            background: rgba(255, 255, 255, 0.2); border: 1px solid rgba(255, 255, 255, 0.3);
+            color: white; width: 32px; height: 32px; font-size: 1rem;
+            border-radius: 50%; cursor: pointer; transition: transform 0.2s, background 0.2s;
+            display: flex; align-items: center; justify-content: center;
+        }
+        .heart-btn.liked {
+            background: rgba(233, 30, 99, 0.2); border-color: #e91e63; color: #ff4081; transform: scale(1.1);
+        }
+        .heart-btn:active { transform: scale(0.9); }
+
+        .next-btn {
+            background: #00bcd4; color: white; border: none;
+            padding: 16px 40px; font-size: 1.1rem; font-weight: bold;
+            border-radius: 50px; cursor: pointer;
+            box-shadow: 0 4px 20px rgba(0, 188, 212, 0.4);
+            transition: transform 0.2s, background 0.2s;
+        }
+        .next-btn:hover { background: #00acc1; transform: scale(1.05); }
+    </style>
+</head>
+<body>
+
+    <div id="bg-image"></div>
+    <div class="overlay"></div>
+
+    <div class="container">
+        <div class="fact-box">
+            <div class="action-header">
+                <button id="heart-icon" class="heart-btn" onclick="toggleLike()">♥</button>
+                <button class="lang-btn" onclick="toggleLanguage()">🇬🇧 Translate</button>
+            </div>
+            <h2 id="title-text">Bạn có biết?</h2>
+            <p id="fact-text">Đang tải...</p>
+        </div>
+        <button class="next-btn" onclick="handleNextClick()">Câu chuyện tiếp theo →</button>
+    </div>
+
+    <script>
+        // Hệ thống tự tạo âm thanh toán học (Web Audio API) tối ưu cho cả iOS và Android
+        let audioCtx = null;
+
+        function initAudio() {
+            if (!audioCtx) {
+                audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            }
+            if (audioCtx.state === 'suspended') {
+                audioCtx.resume();
+            }
+        }
+
+        function playBeep(type) {
+            initAudio();
+            if (!audioCtx) return;
+
+            const osc = audioCtx.createOscillator();
+            const gain = audioCtx.createGain();
+            
+            osc.connect(gain);
+            gain.connect(audioCtx.destination);
+
+            const now = audioCtx.currentTime;
+
+            if (type === 'pop') {
+                // Tiếng pop trầm ấm vui tai khi qua câu
+                osc.type = 'sine';
+                osc.frequency.setValueAtTime(350, now);
+                osc.frequency.exponentialRampToValueAtTime(120, now + 0.12);
+                gain.gain.setValueAtTime(0.4, now);
+                gain.gain.exponentialRampToValueAtTime(0.001, now + 0.12);
+                osc.start(now);
+                osc.stop(now + 0.12);
+            } else if (type === 'ting') {
+                // Tiếng ting trong trẻo khi bấm dịch
+                osc.type = 'sine';
+                osc.frequency.setValueAtTime(700, now);
+                osc.frequency.exponentialRampToValueAtTime(1000, now + 0.08);
+                gain.gain.setValueAtTime(0.25, now);
+                gain.gain.exponentialRampToValueAtTime(0.001, now + 0.15);
+                osc.start(now);
+                osc.stop(now + 0.15);
+            } else if (type === 'like') {
+                // Tiếng chíp kép dễ thương khi thả tim
+                osc.type = 'sine';
+                osc.frequency.setValueAtTime(450, now);
+                osc.frequency.setValueAtTime(850, now + 0.05);
+                gain.gain.setValueAtTime(0.3, now);
+                gain.gain.exponentialRampToValueAtTime(0.001, now + 0.2);
+                osc.start(now);
+                osc.stop(now + 0.2);
+            }
+        }
+
+        const dataStorage = [
+            { id: 1, vi: "Mật ong là thực phẩm duy nhất không bao giờ bị hỏng. Người ta đã tìm thấy hũ mật ong 3.000 năm tuổi trong lăng mộ Ai Cập cổ đại mà vẫn ăn được.", en: "Honey is the only food that never spoils. 3,000-year-old pots of honey found in ancient Egyptian tombs are still perfectly edible.", image: "https://images.unsplash.com/photo-1587049352846-4a222e784d38?w=800" },
+            { id: 2, vi: "Tháp Eiffel có thể cao thêm khoảng 15cm vào mùa hè do hiện tượng nở vì nhiệt của sắt dưới ánh nắng mặt trời.", en: "The Eiffel Tower can grow about 15cm taller during the summer due to thermal expansion of iron in the hot sun.", image: "https://images.unsplash.com/photo-1502602898657-3e91760cbb34?w=800" },
+            { id: 3, vi: "Một ngày trên sao Kim dài hơn một năm của nó. Nó quay quanh trục mất 243 ngày Trái Đất, nhưng quay quanh Mặt Trời chỉ mất 225 ngày.", en: "A day on Venus is longer than a year. It takes 243 Earth days to rotate on its axis, but only 225 days to orbit the Sun.", image: "https://images.unsplash.com/photo-1614313913007-2b4ae8ce32d6?w=800" },
+            { id: 4, vi: "Tim của một con cá voi xanh lớn đến mức một đứa trẻ có thể bơi vừa qua các mạch máu chính của nó.", en: "A blue whale's heart is so large that a human child could swim through its main arteries.", image: "https://images.unsplash.com/photo-1568430462989-44163eb1752f?w=800" },
+            { id: 5, vi: "Chuối là một loại quả mọng xét về mặt thực vật học, trong khi dâu tây thì lại không phải.", en: "Bananas are botanically classified as berries, whereas strawberries are not.", image: "https://images.unsplash.com/photo-1571771894821-ce9b6c11b08e?w=800" },
+            { id: 6, vi: "Nước ép dứa có chứa bromelain, một loại enzyme phân hủy protein. Khi bạn ăn dứa, quả dứa cũng đang tìm cách 'ăn' lại bạn.", en: "Pineapple juice contains bromelain, an enzyme that digests proteins. When you eat a pineapple, it is technically eating you back.", image: "https://images.unsplash.com/photo-1550258987-190a2d41a8ba?w=800" },
+            { id: 7, vi: "Ốc sên có thể ngủ liên tục trong vòng 3 năm nếu thời tiết không phù hợp để chúng sinh sống.", en: "Snails can sleep for up to 3 years if the weather conditions are not suitable for them to survive.", image: "https://images.unsplash.com/photo-1533105079780-92b9be482077?w=800" },
+            { id: 8, vi: "Mạng lưới sợi nấm dưới lòng đất kết nối các cây rừng với nhau để chia sẻ chất dinh dưỡng, được gọi là 'Mạng internet của thế giới tự nhiên'.", en: "Underground fungal networks connect forest trees to share nutrients, often called the 'Wood Wide Web'.", image: "https://images.unsplash.com/photo-1511497584788-876760111969?w=800" },
+            { id: 9, vi: "Dấu vân mũi của mỗi chú chó là duy nhất, giống hệt như dấu vân tay của con người và có thể dùng để định danh.", en: "A dog's nose print is unique, much like a human fingerprint, and can be used to identify them.", image: "https://images.unsplash.com/photo-1543466835-00a7907e9de1?w=800" },
+            { id: 10, vi: "Wombat (gấu túi mũi trần) là loài động vật duy nhất trên thế giới thải ra phân có hình khối vuông hoàn hảo.", en: "Wombats are the only animals in the world whose feces are produced in perfect cube shapes.", image: "https://images.unsplash.com/photo-1591561582301-7ce6588cc286?w=800" },
+            { id: 11, vi: "Hải quỳ có thể sống tới hơn 100 tuổi vì tế bào của chúng liên tục tái tạo mà không bị lão hóa tự nhiên.", en: "Sea anemones can live for over 100 years because their cells continuously regenerate without natural aging.", image: "https://images.unsplash.com/photo-1544551763-46a013bb70d5?w=800" },
+            { id: 12, vi: "Loài sứa bất tử (Turritopsis dohrnii) có khả năng quay ngược vòng đời từ dạng trưởng thành về dạng polyp non khi gặp nguy hiểm.", en: "The immortal jellyfish (Turritopsis dohrnii) can reset its lifecycle from adulthood back to a polyp state when threatened.", image: "https://images.unsplash.com/photo-1564419320461-6870880221ad?w=800" },
+            { id: 13, vi: "Bạch tuộc sở hữu tới 3 trái tim và dòng máu chảy trong cơ thể chúng có màu xanh lam.", en: "Octopuses have 3 hearts and their blood is light blue in color.", image: "https://images.unsplash.com/photo-1545671913-b89ac1b4ac10?w=800" },
+            { id: 14, vi: "Một đám mây tích điện thông thường có trọng lượng tương đương khoảng 100 con voi trưởng thành gộp lại.", en: "An average cumulus cloud weighs about the same as 100 fully-grown elephants.", image: "https://images.unsplash.com/photo-1534274988757-a28bf1a57c17?w=800" },
+            { id: 15, vi: "Trái Đất phẳng hơn một quả bóng pin dự phòng hoặc bóng bi-a tiêu chuẩn nếu chúng ta thu nhỏ nó về cùng một kích cỡ.", en: "The Earth is smoother than a standard billiard ball if shrunken down to the exact same size.", image: "https://images.unsplash.com/photo-1614730321146-b6fa6a46bcb4?w=800" },
+            { id: 16, vi: "Trên sao Mộc và sao Thổ, áp suất khí quyển lớn đến mức những cơn mưa tại đây có thể tạo ra những viên kim cương thật.", en: "On Jupiter and Saturn, the atmospheric pressure is so intense that it literally rains diamonds.", image: "https://images.unsplash.com/photo-1614314107204-b816223b33a7?w=800" },
+            { id: 17, vi: "Màu nguyên bản của vũ trụ được các nhà khoa học xác định và đặt tên là màu 'Cosmic Latte' (Màu cà phê sữa vũ trụ).", en: "The average color of the universe is a beige-like shade discovered and named 'Cosmic Latte'.", image: "https://images.unsplash.com/photo-1462331940025-496dfbfc7564?w=800" },
+            { id: 18, vi: "Kính thiên văn không nhìn vào không gian, chúng đang nhìn ngược về quá khứ vì ánh sáng mất thời gian để truyền tới Trái Đất.", en: "Telescopes do not just look into space; they look back in time because light takes time to travel to Earth.", image: "https://images.unsplash.com/photo-1543722530-d2c3201371e7?w=800" },
+            { id: 19, vi: "Nếu hai miếng kim loại cùng loại chạm vào nhau trong môi trường chân không của vũ trụ, chúng sẽ dính chặt vào nhau vĩnh viễn.", en: "If two pieces of the same metal touch in the vacuum of space, they will bond together permanently.", image: "https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=800" },
+            { id: 20, vi: "Số lượng cây xanh trên Trái Đất lớn hơn rất nhiều so với số lượng các ngôi sao hiện có trong dải Ngân Hà của chúng ta.", en: "There are more trees on Earth than there are stars in our entire Milky Way galaxy.", image: "https://images.unsplash.com/photo-1448375240586-882707db888b?w=800" },
+            { id: 21, vi: "Bộ não con người tạo ra lượng điện năng đủ để thắp sáng một bóng đèn LED nhỏ khi chúng ta đang thức tỉnh.", en: "The human brain generates enough electricity to power a small LED light bulb when awake.", image: "https://images.unsplash.com/photo-1507413245164-6160d8298b31?w=800" },
+            { id: 22, vi: "Cơ thể con người chứa lượng carbon đủ để sản xuất ra khoảng 9.000 chiếc bút chì than tiêu chuẩn.", en: "The human body contains enough carbon to manufacture roughly 9,000 standard graphite pencils.", image: "https://images.unsplash.com/photo-1513364776144-60967b0f800f?w=800" },
+            { id: 23, vi: "Mắt của con người có độ phân giải tương đương khoảng 576 megapixel nếu quy đổi sang công nghệ máy ảnh kỹ thuật số.", en: "The human eye has an equivalent digital resolution of approximately 576 megapixels.", image: "https://images.unsplash.com/photo-1541701494587-cb58502866ab?w=800" },
+            { id: 24, vi: "Axit trong dạ dày của bạn mạnh đến mức nó có khả năng hòa tan hoàn toàn một chiếc ghim sắt nhỏ.", en: "Human stomach acid is so potent that it can completely dissolve a small metal razor blade.", image: "https://images.unsplash.com/photo-1606787366850-de6330128bfc?w=800" },
+            { id: 25, vi: "Mỗi ngày, cơ thể bạn sản sinh ra hàng tỷ tế bào mới và tự phá hủy hàng triệu tế bào lỗi để ngăn ngừa ung thư.", en: "Every day, your body produces billions of new cells and destroys millions of faulty ones to prevent cancer.", image: "https://images.unsplash.com/photo-1530026405186-ed1ea06073e5?w=800" },
+            { id: 26, vi: "Xương của con người, tính theo trọng lượng, thực chất cứng và chịu lực tốt hơn cả thép kết cấu.", en: "Human bone, ounce for ounce, is actually stronger and more pressure-resistant than structural steel.", image: "https://images.unsplash.com/photo-1532187863486-abf9d39d6618?w=800" },
+            { id: 27, vi: "Hồng cầu trong máu chỉ mất khoảng 20 giây để hoàn thành một vòng tuần hoàn chạy khắp toàn bộ cơ thể bạn.", en: "A single red blood cell takes only about 20 seconds to complete a full circuit through your entire body.", image: "https://images.unsplash.com/photo-1576086213369-97a306d36557?w=800" },
+            { id: 28, vi: "Khoảng 50% lượng oxy bạn đang hít thở hàng ngày được sản xuất từ các vi sinh vật và tảo biển ở đại dương.", en: "Roughly 50% of the oxygen you breathe daily is generated by marine microorganisms and ocean plankton.", image: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=800" },
+            { id: 29, vi: "Mật độ dân số thế giới hiện tại có thể đứng vừa vặn trong thành phố Los Angeles nếu tất cả đứng sát cạnh nhau.", en: "The world's entire population could fit inside Los Angeles if everyone stood shoulder-to-shoulder.", image: "https://images.unsplash.com/photo-1514565131-fce0801e5785?w=800" },
+            { id: 30, vi: "Đại dương sâu thẳm chứa lượng vàng hòa tan lớn đến mức có thể chia cho mỗi người trên Trái Đất khoảng 4kg vàng.", en: "The deep ocean contains enough dissolved gold to distribute about 4kg of gold to every single person on Earth.", image: "https://images.unsplash.com/photo-1551244072-5d12893278ab?w=800" }
+        ];
+
+        let currentFact = null;
+        let currentLang = 'vi';
+        let factHistory = []; 
+
+        function getRandomFact() {
+            if (factHistory.length === dataStorage.length) {
+                factHistory = []; 
+            }
+
+            let randomIndex;
+            do {
+                randomIndex = Math.floor(Math.random() * dataStorage.length);
+            } while (factHistory.includes(randomIndex));
+
+            factHistory.push(randomIndex);
+            currentFact = dataStorage[randomIndex];
+            currentLang = 'vi'; 
+            updateUI();
+        }
+
+        function handleNextClick() {
+            playBeep('pop');
+            getRandomFact();
+        }
+
+        function updateUI() {
+            if (!currentFact) return;
+            
+            if (currentLang === 'vi') {
+                document.getElementById("title-text").innerText = "Bạn có biết?";
+                document.getElementById("fact-text").innerText = currentFact.vi;
+                document.querySelector(".lang-btn").innerText = "🇬🇧 Translate";
+            } else {
+                document.getElementById("title-text").innerText = "Did you know?";
+                document.getElementById("fact-text").innerText = currentFact.en;
+                document.querySelector(".lang-btn").innerText = "🇻🇳 Tiếng Việt";
+            }
+            
+            document.getElementById("bg-image").style.backgroundImage = `url('${currentFact.image}')`;
+
+            const savedLikes = JSON.parse(localStorage.getItem('likedFacts')) || [];
+            const heartBtn = document.getElementById("heart-icon");
+            if (savedLikes.includes(currentFact.id)) {
+                heartBtn.classList.add("liked");
+            } else {
+                heartBtn.classList.remove("liked");
+            }
+        }
+
+        function toggleLanguage() {
+            playBeep('ting');
+            currentLang = (currentLang === 'vi') ? 'en' : 'vi';
+            updateUI();
+        }
+
+        function toggleLike() {
+            if (!currentFact) return;
+            
+            playBeep('like');
+
+            let savedLikes = JSON.parse(localStorage.getItem('likedFacts')) || [];
+            const heartBtn = document.getElementById("heart-icon");
+
+            if (savedLikes.includes(currentFact.id)) {
+                savedLikes = savedLikes.filter(id => id !== currentFact.id);
+                heartBtn.classList.remove("liked");
+            } else {
+                savedLikes.push(currentFact.id);
+                heartBtn.classList.add("liked");
+            }
+
+            localStorage.setItem('likedFacts', JSON.stringify(savedLikes));
+        }
+
+        // Đăng ký sự kiện mở khóa cưỡng bức hệ thống âm thanh tự sinh trên thiết bị di động
+        window.addEventListener('click', initAudio, { once: true });
+        window.addEventListener('touchstart', initAudio, { once: true });
+
+        window.onload = getRandomFact;
+    </script>
+</body>
+</html>
