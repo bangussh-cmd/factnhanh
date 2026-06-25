@@ -16,7 +16,7 @@
 
         .overlay {
             position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0, 0, 0, 0.5); z-index: 2;
+            background: rgba(0, 0, 0, 0.55); z-index: 2;
         }
 
         .container {
@@ -30,7 +30,7 @@
             backdrop-filter: blur(15px);
             -webkit-backdrop-filter: blur(15px);
             border: 1px solid rgba(255, 255, 255, 0.2);
-            padding: 35px 25px; border-radius: 24px;
+            padding: 40px 25px 35px 25px; border-radius: 24px;
             max-width: 600px; width: 100%; color: white;
             box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
             margin-bottom: 25px; position: relative;
@@ -41,7 +41,7 @@
             text-transform: uppercase; letter-spacing: 2px; color: #ffd700;
         }
 
-        .fact-box p { font-size: 1.15rem; line-height: 1.6; min-height: 110px; display: flex; align-items: center; justify-content: center; }
+        .fact-box p { font-size: 1.15rem; line-height: 1.6; min-height: 130px; display: flex; align-items: center; justify-content: center; }
 
         .action-header {
             position: absolute; top: 15px; right: 20px;
@@ -84,6 +84,7 @@
 </head>
 <body>
 
+    <!-- Màn hình chào mừng thế hệ mới chuyên nghiệp -->
     <div id="audio-unlock-overlay" style="
         position: fixed; top: 0; left: 0; width: 100%; height: 100%;
         background: linear-gradient(135deg, #111e25 0%, #081015 100%); z-index: 9999;
@@ -93,7 +94,7 @@
         <div style="font-size: 4rem; margin-bottom: 10px; animation: pulse 2s infinite;">💡</div>
         <h1 style="font-size: 1.8rem; font-weight: bold; letter-spacing: 1px; color: #ffd700;">FactNhanh</h1>
         <p style="margin-top: 10px; font-size: 1rem; color: #a0aec0; max-width: 300px; line-height: 1.5;">
-            Khám phá kho tàng sự thật thú vị thế giới song ngữ đầy sống động
+            Khám phá kho tàng sự thật thú vị, "hơi độc lạ" được kể bằng phong cách cực cuốn!
         </p>
         
         <button onclick="startApp()" style="
@@ -192,28 +193,18 @@
             } catch (e) {}
         }
 
-        // Đã sửa đổi và bổ sung link ảnh chất lượng cao cho toàn bộ danh sách câu
+        // Kho nội dung mới cực mặn và cuốn hút theo ý tưởng của bạn
         const dataStorage = [
-            { id: 1, vi: "Mật ong là thực phẩm duy nhất không bao giờ bị hỏng. Người ta đã tìm thấy hũ mật ong 3.000 năm tuổi trong lăng mộ Ai Cập cổ đại mà vẫn ăn được.", en: "Honey is the only food that never spoils. 3,000-year-old pots of honey found in ancient Egyptian tombs are still perfectly edible.", image: "https://images.unsplash.com/photo-1587049352846-4a222e784d38?w=800" },
-            { id: 2, vi: "Tháp Eiffel có thể cao thêm khoảng 15cm vào mùa hè do hiện tượng nở vì nhiệt của sắt dưới ánh nắng mặt trời.", en: "The Eiffel Tower can grow about 15cm taller during the summer due to thermal expansion of iron in the hot sun.", image: "https://images.unsplash.com/photo-1502602898657-3e91760cbb34?w=800" },
-            { id: 3, vi: "Một ngày trên sao Kim dài hơn một năm của nó. Nó quay quanh trục mất 243 ngày Trái Đất, nhưng quay quanh Mặt Trời chỉ mất 225 ngày.", en: "A day on Venus is longer than a year. It takes 243 Earth days to rotate on its axis, but only 225 days to orbit the Sun.", image: "https://images.unsplash.com/photo-1614313913007-2b4ae8ce32d6?w=800" },
-            { id: 4, vi: "Tim của một con cá voi xanh lớn đến mức một đứa trẻ có thể bơi vừa qua các mạch máu chính của nó.", en: "A blue whale's heart is so large that a human child could swim through its main arteries.", image: "https://images.unsplash.com/photo-1568430462989-44163eb1752f?w=800" },
-            { id: 5, vi: "Chuối là một loại quả mọng xét về mặt thực vật học, trong khi dâu tây thì lại không phải.", en: "Bananas are botanically classified as berries, whereas strawberries are not.", image: "https://images.unsplash.com/photo-1571771894821-ce9b6c11b08e?w=800" },
-            { id: 6, vi: "Nước ép dứa có chứa bromelain, một loại enzyme phân hủy protein. Khi bạn ăn dứa, quả dứa cũng đang tìm cách 'ăn' lại bạn.", en: "Pineapple juice contains bromelain, an enzyme that digests proteins. When you eat a pineapple, it is technically eating you back.", image: "https://images.unsplash.com/photo-1550258987-190a2d41a8ba?w=800" },
-            { id: 7, vi: "Ốc sên có thể ngủ liên tục trong vòng 3 năm nếu thời tiết không phù hợp để chúng sinh sống.", en: "Snails can sleep for up to 3 years if the weather conditions are not suitable for them to survive.", image: "https://images.unsplash.com/photo-1533105079780-92b9be482077?w=800" },
-            { id: 8, vi: "Mạng lưới sợi nấm dưới lòng đất kết nối các cây rừng với nhau để chia sẻ chất dinh dưỡng, được gọi là 'Mạng internet của thế giới tự nhiên'.", en: "Underground fungal networks connect forest trees to share nutrients, often called the 'Wood Wide Web'.", image: "https://images.unsplash.com/photo-1511497584788-876760111969?w=800" },
-            { id: 9, vi: "Dấu vân mũi của mỗi chú chó là duy nhất, giống hệt như dấu vân tay của con người và có thể dùng để định danh.", en: "A dog's nose print is unique, much like a human fingerprint, and can be used to identify them.", image: "https://images.unsplash.com/photo-1543466835-00a7907e9de1?w=800" },
-            { id: 10, vi: "Wombat (gấu túi mũi trần) là loài động vật duy nhất trên thế giới thải ra phân có hình khối vuông hoàn hảo.", en: "Wombats are the only animals in the world whose feces are produced in perfect cube shapes.", image: "https://images.unsplash.com/photo-1591561582301-7ce6588cc286?w=800" },
-            { id: 11, vi: "Hải quỳ có thể sống tới hơn 100 tuổi vì tế bào của chúng liên tục tái tạo mà không bị lão hóa tự nhiên.", en: "Sea anemones can live for over 100 years because their cells continuously regenerate without natural aging.", image: "https://images.unsplash.com/photo-1544551763-46a013bb70d5?w=800" },
-            { id: 12, vi: "Loài sứa bất tử (Turritopsis dohrnii) có khả năng quay ngược vòng đời từ dạng trưởng thành về dạng polyp non khi gặp nguy hiểm.", en: "The immortal jellyfish (Turritopsis dohrnii) can reset its lifecycle from adulthood back to a polyp state when threatened.", image: "https://images.unsplash.com/photo-1564419320461-6870880221ad?w=800" },
-            { id: 13, vi: "Bạch tuộc sở hữu tới 3 trái tim và dòng máu chảy trong cơ thể chúng có màu xanh lam.", en: "Octopuses have 3 hearts and their blood is light blue in color.", image: "https://images.unsplash.com/photo-1545671913-b89ac1b4ac10?w=800" },
-            { id: 14, vi: "Một đám mây tích điện thông thường có trọng lượng tương đương khoảng 100 con voi trưởng thành gộp lại.", en: "An average cumulus cloud weighs about the same as 100 fully-grown elephants.", image: "https://images.unsplash.com/photo-1534274988757-a28bf1a57c17?w=800" },
-            { id: 15, vi: "Trái Đất phẳng hơn một quả bóng pin dự phòng hoặc bóng bi-a tiêu chuẩn nếu chúng ta thu nhỏ nó về cùng một kích cỡ.", en: "The Earth is smoother than a standard billiard ball if shrunken down to the exact same size.", image: "https://images.unsplash.com/photo-1614730321146-b6fa6a46bcb4?w=800" },
-            { id: 16, vi: "Trong vũ trụ, áp suất khí quyển lớn đến mức những cơn mưa tại sao Mộc có thể tạo ra kim cương thật.", en: "On Jupiter and Saturn, the atmospheric pressure is so intense that it literally rains diamonds.", image: "https://images.unsplash.com/photo-1614314107204-b816223b33a7?w=800" },
-            { id: 17, vi: "Màu nguyên bản của vũ trụ được các nhà khoa học xác định và đặt tên là màu 'Cosmic Latte' (Màu cà phê sữa vũ trụ).", en: "The average color of the universe is a beige-like shade discovered and named 'Cosmic Latte'.", image: "https://images.unsplash.com/photo-1462331940025-496dfbfc7564?w=800" },
-            { id: 18, vi: "Kính thiên văn không nhìn vào không gian, chúng đang nhìn ngược về quá khứ vì ánh sáng mất thời gian để truyền tới Trái Đất.", en: "Telescopes do not just look into space; they look back in time because light takes time to travel to Earth.", image: "https://images.unsplash.com/photo-1543722530-d2c3201371e7?w=800" },
-            { id: 19, vi: "Nếu hai miếng kim loại cùng loại chạm vào nhau trong môi trường chân không của vũ trụ, chúng sẽ dính chặt vào nhau vĩnh viễn.", en: "If two pieces of the same metal touch in the vacuum of space, they will bond together permanently.", image: "https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=800" },
-            { id: 20, vi: "Số lượng cây xanh trên Trái Đất lớn hơn rất nhiều so với số lượng các ngôi sao hiện có trong dải Ngân Hà của chúng ta.", en: "There are more trees on Earth than there are stars in our entire Milky Way galaxy.", image: "https://images.unsplash.com/photo-1448375240586-882707db888b?w=800" }
+            { id: 1, vi: "Kỷ lục chạy 100m thế giới thuộc về Usain Bolt với 9,58 giây. Nghĩa là cứ mỗi lần bạn chớp mắt một cái, anh ấy đã phóng đi được hơn 10 mét rồi. Quá khủng khiếp phải không?", en: "Usain Bolt's 100m world record is 9.58 seconds. This means every time you blink once, he has already sprinted over 10 meters! Mind-blowing, isn't it?", image: "https://images.unsplash.com/photo-1461896836934-ffe607ba8211?w=800" },
+            { id: 2, vi: "Trong suốt cuộc đời, một người đàn ông khỏe mạnh sản sinh ra lượng tinh dịch đủ để lấp đầy 3 hồ chứa lớn dung tích 100 mét khối mỗi hồ! Bạn có bất ngờ về con số khổng lồ này không?", en: "Throughout his life, a healthy man produces enough semen to fill 3 large reservoirs of 100 cubic meters each! Are you surprised by this massive number?", image: "https://images.unsplash.com/photo-1576086213369-97a306d36557?w=800" },
+            { id: 3, vi: "Tài sản của Elon Musk lớn tới mức nếu bạn quy đổi ra các tờ tiền 500k Việt Nam đồng và ngồi đốt liên tục không ngừng nghỉ, bạn phải mất tới hơn 100 năm mới có thể đốt hết sạch đấy!", en: "Elon Musk's wealth is so immense that if you converted it into Vietnam's 500k VND bills and burned them continuously, it would take you over 100 years to burn it all!", image: "https://images.unsplash.com/photo-1617791160505-6f006e121980?w=800" },
+            { id: 4, vi: "Bạn có biết nước ép dứa chứa enzyme bromelain chuyên phân hủy protein? Về cơ bản, khi bạn đang nhai dứa ngon lành thì quả dứa cũng đang tìm cách 'ăn thịt' ngược lại khoang miệng của bạn đó!", en: "Did you know pineapple juice contains bromelain, an enzyme that breaks down proteins? Basically, while you are enjoying eating a pineapple, it is technically trying to 'eat' you back!", image: "https://images.unsplash.com/photo-1550258987-190a2d41a8ba?w=800" },
+            { id: 5, vi: "Ốc sên là bậc thầy ngủ nướng! Nếu thời tiết quá khô hạn hoặc khắc nghiệt, chúng có thể đi ngủ một mạch liên tục suốt 3 năm trời mà không cần ăn uống gì. Có ai muốn có siêu năng lực này không?", en: "Snails are the ultimate sleep masters! If the weather is too dry, they can literally go to sleep for 3 straight years without eating. Anyone wants this superpower?", image: "https://images.unsplash.com/photo-1533105079780-92b9be482077?w=800" },
+            { id: 6, vi: "Loài sứa bất tử (Turritopsis dohrnii) không bao giờ chết già. Khi gặp nguy hiểm hoặc già đi, chúng tự quay ngược vòng đời trở lại thành một em bé sơ sinh. Đúng là cải lão hoàn đồng ngoài đời thực!", en: "The immortal jellyfish never dies of old age. When threatened, it reverses its life cycle back to a newborn polyp state. Real-life reverse aging is real!", image: "https://images.unsplash.com/photo-1564419320461-6870880221ad?w=800" },
+            { id: 7, vi: "Nếu đem cân một đám mây tích điện màu trắng bồng bềnh mà bạn hay nhìn thấy trên trời, trọng lượng của nó tương đương với khoảng 100 con voi trưởng thành gộp lại! Bạn thấy nó còn nhẹ nhàng nữa không?", en: "An average fluffy white cumulus cloud weighs about the same as 100 fully-grown elephants combined! Do you still think it looks light and airy?", image: "https://images.unsplash.com/photo-1534274988757-a28bf1a57c17?w=800" },
+            { id: 8, vi: "Áp suất khí quyển trên sao Mộc lớn kinh hoàng đến mức nó có thể ép chặt carbon trong không khí lại và tạo ra những cơn mưa... bằng kim cương thật 100%. Bạn có muốn lên đó nhặt vài viên không?", en: "The atmospheric pressure on Jupiter is so intense that it crushes carbon in the air, causing it to literally rain 100% real diamonds. Want to go there and grab some?", image: "https://images.unsplash.com/photo-1614314107204-b816223b33a7?w=800" },
+            { id: 9, vi: "Mật ong trong lăng mộ Ai Cập cổ đại đã trải qua 3.000 năm tuổi nhưng khi các nhà khảo cổ nếm thử thì nó vẫn thơm ngon hoàn hảo! Đây là thực phẩm duy nhất trên Trái Đất không bao giờ bị thiu hỏng.", en: "Honey found in ancient Egyptian tombs is over 3,000 years old, but it is still perfectly edible! It is the only food on Earth that never spoils.", image: "https://images.unsplash.com/photo-1587049352846-4a222e784d38?w=800" },
+            { id: 10, vi: "Bạch tuộc là sinh vật cực dị khi sở hữu tới 3 trái tim, 9 bộ não và dòng máu chảy trong người chúng có màu xanh lam quý tộc chứ không phải màu đỏ giống như chúng ta đâu nhé!", en: "Octopuses are incredibly bizarre: they have 3 hearts, 9 brains, and their blood is a royal light blue color instead of red like ours!", image: "https://images.unsplash.com/photo-1545671913-b89ac1b4ac10?w=800" }
         ];
 
         let currentFact = null;
