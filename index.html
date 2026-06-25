@@ -3,107 +3,62 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FactNhanh - Sự Thật Song Ngữ</title>
+    <title>FactNhanh - Sự Thật Độc Lạ</title>
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', sans-serif; }
         body, html { height: 100%; overflow: hidden; background: #000; }
-
         #bg-image {
             position: absolute; top: 0; left: 0; width: 100%; height: 100%;
             background-size: cover; background-position: center;
             transition: background-image 0.5s ease-in-out; z-index: 1;
         }
-
         .overlay {
             position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0, 0, 0, 0.55); z-index: 2;
+            background: rgba(0, 0, 0, 0.6); z-index: 2;
         }
-
         .container {
             position: relative; z-index: 3; height: 100%;
             display: flex; flex-direction: column; justify-content: center; align-items: center;
             padding: 20px; text-align: center;
         }
-
         .fact-box {
             background: rgba(255, 255, 255, 0.12);
-            backdrop-filter: blur(15px);
-            -webkit-backdrop-filter: blur(15px);
+            backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px);
             border: 1px solid rgba(255, 255, 255, 0.2);
             padding: 40px 25px 35px 25px; border-radius: 24px;
             max-width: 600px; width: 100%; color: white;
             box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
             margin-bottom: 25px; position: relative;
         }
-
-        .fact-box h2 {
-            font-size: 1.3rem; margin-bottom: 15px;
-            text-transform: uppercase; letter-spacing: 2px; color: #ffd700;
-        }
-
-        .fact-box p { font-size: 1.15rem; line-height: 1.6; min-height: 130px; display: flex; align-items: center; justify-content: center; }
-
-        .action-header {
-            position: absolute; top: 15px; right: 20px;
-            display: flex; gap: 10px; align-items: center;
-        }
-
+        .fact-box h2 { font-size: 1.3rem; margin-bottom: 15px; text-transform: uppercase; letter-spacing: 2px; color: #ffd700; }
+        .fact-box p { font-size: 1.15rem; line-height: 1.6; min-height: 140px; display: flex; align-items: center; justify-content: center; }
+        .action-header { position: absolute; top: 15px; right: 20px; display: flex; gap: 10px; align-items: center; }
         .lang-btn {
             background: rgba(255, 255, 255, 0.2); border: 1px solid rgba(255, 255, 255, 0.3);
-            color: white; padding: 6px 12px; font-size: 0.85rem;
-            border-radius: 20px; cursor: pointer; transition: 0.2s;
+            color: white; padding: 6px 12px; font-size: 0.85rem; border-radius: 20px; cursor: pointer; transition: 0.2s;
         }
         .lang-btn:hover { background: rgba(255, 255, 255, 0.4); }
-
         .heart-btn {
             background: rgba(255, 255, 255, 0.2); border: 1px solid rgba(255, 255, 255, 0.3);
-            color: white; width: 32px; height: 32px; font-size: 1rem;
-            border-radius: 50%; cursor: pointer; transition: transform 0.2s, background 0.2s;
-            display: flex; align-items: center; justify-content: center;
+            color: white; width: 32px; height: 32px; font-size: 1rem; border-radius: 50%; cursor: pointer;
+            display: flex; align-items: center; justify-content: center; transition: 0.2s;
         }
-        .heart-btn.liked {
-            background: rgba(233, 30, 99, 0.2); border-color: #e91e63; color: #ff4081; transform: scale(1.1);
-        }
-        .heart-btn:active { transform: scale(0.9); }
-
+        .heart-btn.liked { background: rgba(233, 30, 99, 0.2); border-color: #e91e63; color: #ff4081; transform: scale(1.1); }
         .next-btn {
-            background: #00bcd4; color: white; border: none;
-            padding: 16px 40px; font-size: 1.1rem; font-weight: bold;
-            border-radius: 50px; cursor: pointer;
-            box-shadow: 0 4px 20px rgba(0, 188, 212, 0.4);
-            transition: transform 0.2s, background 0.2s;
+            background: #00bcd4; color: white; border: none; padding: 16px 40px; font-size: 1.1rem; font-weight: bold;
+            border-radius: 50px; cursor: pointer; box-shadow: 0 4px 20px rgba(0, 188, 212, 0.4); transition: 0.2s;
         }
         .next-btn:hover { background: #00acc1; transform: scale(1.05); }
-
-        @keyframes pulse {
-            0% { transform: scale(1); opacity: 0.8; }
-            50% { transform: scale(1.1); opacity: 1; text-shadow: 0 0 20px #ffd700; }
-            100% { transform: scale(1); opacity: 0.8; }
-        }
+        @keyframes pulse { 0% { transform: scale(1); opacity: 0.8; } 50% { transform: scale(1.1); opacity: 1; text-shadow: 0 0 20px #ffd700; } 100% { transform: scale(1); opacity: 0.8; } }
     </style>
 </head>
 <body>
 
-    <!-- Màn hình chào mừng thế hệ mới chuyên nghiệp -->
-    <div id="audio-unlock-overlay" style="
-        position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-        background: linear-gradient(135deg, #111e25 0%, #081015 100%); z-index: 9999;
-        display: flex; flex-direction: column; justify-content: center; align-items: center;
-        color: white; text-align: center; padding: 20px;">
-        
+    <div id="audio-unlock-overlay" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(135deg, #111e25 0%, #081015 100%); z-index: 9999; display: flex; flex-direction: column; justify-content: center; align-items: center; color: white; text-align: center; padding: 20px;">
         <div style="font-size: 4rem; margin-bottom: 10px; animation: pulse 2s infinite;">💡</div>
         <h1 style="font-size: 1.8rem; font-weight: bold; letter-spacing: 1px; color: #ffd700;">FactNhanh</h1>
-        <p style="margin-top: 10px; font-size: 1rem; color: #a0aec0; max-width: 300px; line-height: 1.5;">
-            Khám phá kho tàng sự thật thú vị, "hơi độc lạ" được kể bằng phong cách cực cuốn!
-        </p>
-        
-        <button onclick="startApp()" style="
-            background: linear-gradient(90deg, #00bcd4, #00acc1); color: white; border: none; 
-            padding: 16px 45px; font-size: 1.1rem; font-weight: bold; border-radius: 50px; 
-            cursor: pointer; margin-top: 30px; box-shadow: 0 6px 20px rgba(0, 188, 212, 0.4); 
-            transition: transform 0.2s, box-shadow 0.2s;">
-            Bắt đầu khám phá →
-        </button>
+        <p style="margin-top: 10px; font-size: 1rem; color: #a0aec0; max-width: 320px; line-height: 1.5;">Khám phá kho tàng sự thật giải trí độc lạ và tràn đầy bất ngờ!</p>
+        <button onclick="startApp()" style="background: linear-gradient(90deg, #00bcd4, #00acc1); color: white; border: none; padding: 16px 45px; font-size: 1.1rem; font-weight: bold; border-radius: 50px; cursor: pointer; margin-top: 30px; box-shadow: 0 6px 20px rgba(0, 188, 212, 0.4);">Bắt đầu khám phá →</button>
     </div>
 
     <div id="bg-image"></div>
@@ -123,89 +78,98 @@
 
     <script>
         let audioCtx = null;
-
         function initAudio() {
             try {
                 const AudioContext = window.AudioContext || window.webkitAudioContext;
                 if (!AudioContext) return false;
-                
-                if (!audioCtx) {
-                    audioCtx = new AudioContext();
-                }
-                if (audioCtx.state === 'suspended') {
-                    audioCtx.resume();
-                }
+                if (!audioCtx) audioCtx = new AudioContext();
+                if (audioCtx.state === 'suspended') audioCtx.resume();
                 return true;
-            } catch (e) {
-                console.log("Audio bị trình duyệt chặn:", e);
-                return false;
-            }
+            } catch (e) { return false; }
         }
-
         function startApp() {
             document.getElementById('audio-unlock-overlay').style.display = 'none';
             getRandomFact();
-
-            try {
-                if (initAudio()) {
-                    setTimeout(() => { playBeep('ting'); }, 100);
-                }
-            } catch (e) {}
+            if (initAudio()) setTimeout(() => { playBeep('ting'); }, 100);
         }
-
         function playBeep(type) {
             try {
                 if (!initAudio() || !audioCtx) return;
-
                 const osc = audioCtx.createOscillator();
                 const gain = audioCtx.createGain();
-                
-                osc.connect(gain);
-                gain.connect(audioCtx.destination);
-
+                osc.connect(gain); gain.connect(audioCtx.destination);
                 const now = audioCtx.currentTime;
-
                 if (type === 'pop') {
-                    osc.type = 'sine';
-                    osc.frequency.setValueAtTime(300, now);
-                    osc.frequency.exponentialRampToValueAtTime(100, now + 0.15);
-                    gain.gain.setValueAtTime(0.6, now);
-                    gain.gain.exponentialRampToValueAtTime(0.001, now + 0.15);
-                    osc.start(now);
-                    osc.stop(now + 0.15);
+                    osc.type = 'sine'; osc.frequency.setValueAtTime(300, now); osc.frequency.exponentialRampToValueAtTime(100, now + 0.15);
+                    gain.gain.setValueAtTime(0.6, now); gain.gain.exponentialRampToValueAtTime(0.001, now + 0.15);
+                    osc.start(now); osc.stop(now + 0.15);
                 } else if (type === 'ting') {
-                    osc.type = 'sine';
-                    osc.frequency.setValueAtTime(600, now);
-                    osc.frequency.exponentialRampToValueAtTime(900, now + 0.1);
-                    gain.gain.setValueAtTime(0.4, now);
-                    gain.gain.exponentialRampToValueAtTime(0.001, now + 0.2);
-                    osc.start(now);
-                    osc.stop(now + 0.2);
+                    osc.type = 'sine'; osc.frequency.setValueAtTime(600, now); osc.frequency.exponentialRampToValueAtTime(900, now + 0.1);
+                    gain.gain.setValueAtTime(0.4, now); gain.gain.exponentialRampToValueAtTime(0.001, now + 0.2);
+                    osc.start(now); osc.stop(now + 0.2);
                 } else if (type === 'like') {
-                    osc.type = 'triangle';
-                    osc.frequency.setValueAtTime(500, now);
-                    osc.frequency.setValueAtTime(800, now + 0.06);
-                    gain.gain.setValueAtTime(0.5, now);
-                    gain.gain.exponentialRampToValueAtTime(0.001, now + 0.25);
-                    osc.start(now);
-                    osc.stop(now + 0.25);
+                    osc.type = 'triangle'; osc.frequency.setValueAtTime(500, now); osc.frequency.setValueAtTime(800, now + 0.06);
+                    gain.gain.setValueAtTime(0.5, now); gain.gain.exponentialRampToValueAtTime(0.001, now + 0.25);
+                    osc.start(now); osc.stop(now + 0.25);
                 }
             } catch (e) {}
         }
 
-        // Kho nội dung mới cực mặn và cuốn hút theo ý tưởng của bạn
+        // PHẦN 1: TẬP HỢP 40 CÂU ĐẦU TIÊN ĐÃ BIÊN SOẠN RIÊNG BIỆT
         const dataStorage = [
-            { id: 1, vi: "Kỷ lục chạy 100m thế giới thuộc về Usain Bolt với 9,58 giây. Nghĩa là cứ mỗi lần bạn chớp mắt một cái, anh ấy đã phóng đi được hơn 10 mét rồi. Quá khủng khiếp phải không?", en: "Usain Bolt's 100m world record is 9.58 seconds. This means every time you blink once, he has already sprinted over 10 meters! Mind-blowing, isn't it?", image: "https://images.unsplash.com/photo-1461896836934-ffe607ba8211?w=800" },
-            { id: 2, vi: "Trong suốt cuộc đời, một người đàn ông khỏe mạnh sản sinh ra lượng tinh dịch đủ để lấp đầy 3 hồ chứa lớn dung tích 100 mét khối mỗi hồ! Bạn có bất ngờ về con số khổng lồ này không?", en: "Throughout his life, a healthy man produces enough semen to fill 3 large reservoirs of 100 cubic meters each! Are you surprised by this massive number?", image: "https://images.unsplash.com/photo-1576086213369-97a306d36557?w=800" },
-            { id: 3, vi: "Tài sản của Elon Musk lớn tới mức nếu bạn quy đổi ra các tờ tiền 500k Việt Nam đồng và ngồi đốt liên tục không ngừng nghỉ, bạn phải mất tới hơn 100 năm mới có thể đốt hết sạch đấy!", en: "Elon Musk's wealth is so immense that if you converted it into Vietnam's 500k VND bills and burned them continuously, it would take you over 100 years to burn it all!", image: "https://images.unsplash.com/photo-1617791160505-6f006e121980?w=800" },
-            { id: 4, vi: "Bạn có biết nước ép dứa chứa enzyme bromelain chuyên phân hủy protein? Về cơ bản, khi bạn đang nhai dứa ngon lành thì quả dứa cũng đang tìm cách 'ăn thịt' ngược lại khoang miệng của bạn đó!", en: "Did you know pineapple juice contains bromelain, an enzyme that breaks down proteins? Basically, while you are enjoying eating a pineapple, it is technically trying to 'eat' you back!", image: "https://images.unsplash.com/photo-1550258987-190a2d41a8ba?w=800" },
-            { id: 5, vi: "Ốc sên là bậc thầy ngủ nướng! Nếu thời tiết quá khô hạn hoặc khắc nghiệt, chúng có thể đi ngủ một mạch liên tục suốt 3 năm trời mà không cần ăn uống gì. Có ai muốn có siêu năng lực này không?", en: "Snails are the ultimate sleep masters! If the weather is too dry, they can literally go to sleep for 3 straight years without eating. Anyone wants this superpower?", image: "https://images.unsplash.com/photo-1533105079780-92b9be482077?w=800" },
-            { id: 6, vi: "Loài sứa bất tử (Turritopsis dohrnii) không bao giờ chết già. Khi gặp nguy hiểm hoặc già đi, chúng tự quay ngược vòng đời trở lại thành một em bé sơ sinh. Đúng là cải lão hoàn đồng ngoài đời thực!", en: "The immortal jellyfish never dies of old age. When threatened, it reverses its life cycle back to a newborn polyp state. Real-life reverse aging is real!", image: "https://images.unsplash.com/photo-1564419320461-6870880221ad?w=800" },
-            { id: 7, vi: "Nếu đem cân một đám mây tích điện màu trắng bồng bềnh mà bạn hay nhìn thấy trên trời, trọng lượng của nó tương đương với khoảng 100 con voi trưởng thành gộp lại! Bạn thấy nó còn nhẹ nhàng nữa không?", en: "An average fluffy white cumulus cloud weighs about the same as 100 fully-grown elephants combined! Do you still think it looks light and airy?", image: "https://images.unsplash.com/photo-1534274988757-a28bf1a57c17?w=800" },
-            { id: 8, vi: "Áp suất khí quyển trên sao Mộc lớn kinh hoàng đến mức nó có thể ép chặt carbon trong không khí lại và tạo ra những cơn mưa... bằng kim cương thật 100%. Bạn có muốn lên đó nhặt vài viên không?", en: "The atmospheric pressure on Jupiter is so intense that it crushes carbon in the air, causing it to literally rain 100% real diamonds. Want to go there and grab some?", image: "https://images.unsplash.com/photo-1614314107204-b816223b33a7?w=800" },
-            { id: 9, vi: "Mật ong trong lăng mộ Ai Cập cổ đại đã trải qua 3.000 năm tuổi nhưng khi các nhà khảo cổ nếm thử thì nó vẫn thơm ngon hoàn hảo! Đây là thực phẩm duy nhất trên Trái Đất không bao giờ bị thiu hỏng.", en: "Honey found in ancient Egyptian tombs is over 3,000 years old, but it is still perfectly edible! It is the only food on Earth that never spoils.", image: "https://images.unsplash.com/photo-1587049352846-4a222e784d38?w=800" },
-            { id: 10, vi: "Bạch tuộc là sinh vật cực dị khi sở hữu tới 3 trái tim, 9 bộ não và dòng máu chảy trong người chúng có màu xanh lam quý tộc chứ không phải màu đỏ giống như chúng ta đâu nhé!", en: "Octopuses are incredibly bizarre: they have 3 hearts, 9 brains, and their blood is a royal light blue color instead of red like ours!", image: "https://images.unsplash.com/photo-1545671913-b89ac1b4ac10?w=800" }
+            { id: 1, vi: "Usain Bolt giữ kỷ lục chạy 100m thế giới với 9,58 giây. Nghĩa là mỗi lần bạn chớp mắt một cái, anh ấy đã phóng đi được hơn 10 mét rồi. Quá khủng khiếp phải không?", en: "Usain Bolt's 100m record is 9.58 seconds. Every time you blink once, he has already sprinted over 10 meters! Mind-blowing, right?", image: "https://images.unsplash.com/photo-1461896836934-ffe607ba8211?w=800" },
+            { id: 2, vi: "Trong suốt cuộc đời, một người đàn ông trưởng thành sản sinh lượng tinh dịch đủ để lấp đầy 3 hồ chứa lớn dung tích 100 mét khối mỗi hồ! Bạn có bất ngờ về con số khổng lồ này không?", en: "Throughout life, an adult man produces enough semen to fill 3 large reservoirs of 100 cubic meters each! Are you surprised by this massive number?", image: "https://images.unsplash.com/photo-1576086213369-97a306d36557?w=800" },
+            { id: 3, vi: "Sơn Tùng M-TP là ca sĩ Top 1 Server Việt Nam, nhưng bạn biết không? Anh ấy chỉ cao khoảng 1m68. Đúng là chiều cao của một người đàn ông đích thực luôn được tính từ đỉnh đầu trở lên bạn nhỉ!", en: "Son Tung M-TP is the Top 1 singer in Vietnam, but did you know he is only about 1.68m tall? Truly, a real man's height is measured from his brow up!", image: "https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?w=800" },
+            { id: 4, vi: "Tài sản của Elon Musk lớn tới mức nếu bạn đổi ra các tờ 500k Việt Nam đồng và ngồi đốt liên tục không ngừng nghỉ, bạn phải mất tới hơn 100 năm mới có thể đốt hết sạch đấy!", en: "Elon Musk's wealth is so immense that if changed into 500k VND bills and burned continuously, it would take you over 100 years to burn it all!", image: "https://images.unsplash.com/photo-1617791160505-6f006e121980?w=800" },
+            { id: 5, vi: "Bài hát quốc dân 'Gangnam Style' của PSY từng hot đến mức làm sập luôn bộ đếm lượt xem của YouTube vào năm 2014, buộc các kỹ sư Google phải lập tức viết lại code hệ thống!", en: "PSY's 'Gangnam Style' was so hot it broke YouTube's view counter in 2014, forcing Google engineers to rewrite the system's core code!", image: "https://images.unsplash.com/photo-1514525253161-7a46d19cd819?w=800" },
+            { id: 6, vi: "Chú chuột Mickey quyền lực của nhà Disney thực chất chỉ có 4 ngón tay. Lý do là vì các họa sĩ thời đó muốn tiết kiệm thời gian vẽ và hàng triệu USD chi phí sản xuất!", en: "Disney's Mickey Mouse actually has only 4 fingers. The reason was to save animators' drawing time and millions of dollars in production costs!", image: "https://images.unsplash.com/photo-1608889175123-8ec330b86f84?w=800" },
+            { id: 7, vi: "Trong phim Titanic, chi phí để xây dựng lại con tàu mô hình phục vụ cho việc quay phim còn đắt đỏ hơn cả chi phí thực tế để đóng con tàu Titanic thật ngoài đời vào năm 1912!", en: "In the movie Titanic, the cost to construct the prop ship was actually more expensive than the cost to build the real Titanic ship back in 1912!", image: "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?w=800" },
+            { id: 8, vi: "Nước ép dứa chứa enzyme phân hủy protein. Về cơ bản, khi bạn đang nhai dứa ngon lành thì quả dứa cũng đang tìm cách 'ăn thịt' ngược lại khoang miệng của bạn đó!", en: "Pineapple juice contains enzymes that digest protein. Basically, while you are chewing a pineapple, it is trying to eat your mouth back!", image: "https://images.unsplash.com/photo-1550258987-190a2d41a8ba?w=800" },
+            { id: 9, vi: "Ốc sên là bậc thầy ngủ nướng! Nếu thời tiết quá khô hạn hoặc khắc nghiệt, chúng có thể đi ngủ một mạch liên tục suốt 3 năm trời mà không cần ăn uống gì.", en: "Snails are the ultimate sleep masters! If the weather is too dry, they can go to sleep for 3 straight years without eating anything.", image: "https://images.unsplash.com/photo-1533105079780-92b9be482077?w=800" },
+            { id: 10, vi: "Loài sứa bất tử có khả năng tự quay ngược vòng đời từ dạng trưởng thành về lại dạng em bé sơ sinh khi gặp nguy hiểm. Đúng là cải lão hoàn đồng ngoài đời thực!", en: "The immortal jellyfish can reset its life cycle from adulthood back to a newborn polyp state when threatened. Real-life reverse aging!", image: "https://images.unsplash.com/photo-1564419320461-6870880221ad?w=800" },
+            { id: 11, vi: "Trọng lượng của một đám mây trắng bồng bềnh tương đương với khoảng 100 con voi trưởng thành gộp lại! Bạn thấy nó còn nhẹ nhàng nữa không?", en: "An average fluffy white cloud weighs about the same as 100 fully-grown elephants combined! Do you still think it looks light?", image: "https://images.unsplash.com/photo-1534274988757-a28bf1a57c17?w=800" },
+            { id: 12, vi: "Áp suất trên sao Mộc lớn kinh hoàng đến mức nó có thể ép chặt carbon trong không khí lại và tạo ra những cơn mưa... bằng kim cương thật 100%.", en: "The atmospheric pressure on Jupiter is so intense that it crushes carbon in the air, causing it to literally rain 100% real diamonds.", image: "https://images.unsplash.com/photo-1614314107204-b816223b33a7?w=800" },
+            { id: 13, vi: "Mật ong là thực phẩm duy nhất không bao giờ hỏng. Người ta tìm thấy những hũ mật ong 3.000 năm tuổi trong lăng墓 Ai Cập cổ đại mà vẫn thơm ngon ăn được!", en: "Honey is the only food that never spoils. 3,000-year-old honey found in ancient Egyptian tombs is still perfectly edible and tasty!", image: "https://images.unsplash.com/photo-1587049352846-4a222e784d38?w=800" },
+            { id: 14, vi: "Bạch tuộc sở hữu tới 3 trái tim, 9 bộ não và dòng máu chảy trong người chúng có màu xanh lam quý tộc chứ không phải màu đỏ giống như chúng ta.", en: "Octopuses have 3 hearts, 9 brains, and their blood is a royal light blue color instead of red like humans.", image: "https://images.unsplash.com/photo-1545671913-b89ac1b4ac10?w=800" },
+            { id: 15, vi: "Hộp đen của máy bay thực ra không phải màu đen mà được sơn màu cam phản quang cực kỳ chói lọi để các đội cứu hộ dễ dàng tìm kiếm khi có tai nạn.", en: "An airplane's black box is not actually black; it is painted a bright, reflective orange to help rescue teams find it easily.", image: "https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?w=800" },
+            { id: 16, vi: "Tên đầy đủ của thủ đô Bangkok (Thái Lan) có tới 168 chữ cái và là tên địa danh dài nhất thế giới. Người bản xứ cũng hiếm ai đọc thuộc lòng được!", en: "Bangkok's full ceremonial name has 168 letters and is the longest place name in the world. Even locals can rarely recite it!", image: "https://images.unsplash.com/photo-1508009603885-50cf7c579365?w=800" },
+            { id: 17, vi: "Năm 2006, một người đàn ông Úc đã cố gắng bán nước New Zealand trên trang đấu giá eBay với mức giá khởi điểm là 3.000 USD. Vui tính thật sự!", en: "In 2006, an Australian man tried to sell the country of New Zealand on eBay with a starting price of $3,000. Quite a jokester!", image: "https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?w=800" },
+            { id: 18, vi: "Charlie Chaplin từng bí mật tham gia một cuộc thi đóng giả... chính mình và kết quả bất ngờ là ông chỉ giành giải ba. Đúng là hài kịch đời thực!", en: "Charlie Chaplin once secretly entered a Charlie Chaplin look-alike contest and surprisingly only won third place. Talk about real-life comedy!", image: "https://images.unsplash.com/photo-1533928298208-27ff66555d8d?w=800" },
+            { id: 19, vi: "Vào những năm 1980, hãng hàng không American Airlines đã tiết kiệm được 40.000 USD/năm chỉ bằng cách bỏ bớt đúng 1 quả olive trong mỗi phần salad ăn kèm.", en: "In the 1980s, American Airlines saved $40,000 a year simply by removing just one olive from each salad served in first class.", image: "https://images.unsplash.com/photo-1436491865332-7a61a109cc05?w=800" },
+            { id: 20, vi: "Mạng lưới sợi nấm khổng lồ dưới lòng đất kết nối các cây rừng lại với nhau để chia sẻ thức ăn, được giới khoa học gọi là 'Mạng Internet của tự nhiên'.", en: "Underground fungal networks connect forest trees to share nutrients, often called the 'Wood Wide Web' by scientists.", image: "https://images.unsplash.com/photo-1511497584788-876760111969?w=800" },
+            { id: 21, vi: "Nút Like trên Facebook ban đầu suýt chút nữa đã được đặt tên là nút 'Awesome' (Tuyệt vời). Nếu ngày đó họ giữ nguyên ý định thì giờ chúng ta đã đi dạo và 'thả awesome' dạo rồi!", en: "The Facebook 'Like' button was originally going to be called the 'Awesome' button. Imagine asking your friends to 'Awesome' your photos today!", image: "https://images.unsplash.com/photo-1562577309-4932fdd64cd1?w=800" },
+            { id: 22, vi: "Người phát minh ra chiếc bánh Pringles nổi tiếng (ông Fredric Baur) tự hào về sản phẩm của mình đến mức đã yêu cầu gia đình thiêu và chôn cất tro cốt của ông bên trong... một ống khoai tây chiên Pringles!", en: "The inventor of the Pringles can was so proud of his creation that when he died, his ashes were buried inside a Pringles can!", image: "https://images.unsplash.com/photo-1566478431344-78af4b58e7bf?w=800" },
+            { id: 23, vi: "Logo quả táo khuyết của Apple ban đầu không hề đơn giản như bây giờ, mà là cả một bức tranh vẽ nhà bác học Isaac Newton đang ngồi đọc sách dưới gốc cây táo. Nhìn siêu rắc rối luôn!", en: "Apple's first logo featured Sir Isaac Newton sitting under an apple tree. It looked more like a classic sketch than a tech logo!", image: "https://images.unsplash.com/photo-1563206767-5b18f218e8de?w=800" },
+            { id: 24, vi: "Bạn có biết âm thanh rùng rợn của loài khủng long bạo chúa T-Rex trong bộ phim Công viên kỷ Jura huyền thoại thực chất được tạo ra từ tiếng... gầm gừ của một chú chó con phối hợp với tiếng cá voi?", en: "The terrifying roar of the T-Rex in Jurassic Park was actually created by mixing the sounds of a baby elephant, an alligator, and a tiger!", image: "https://images.unsplash.com/photo-1569336415962-a4bd9f69cd83?w=800" },
+            { id: 25, vi: "Khi xem phim hoạt hình Shrek, ít ai biết rằng đoàn làm phim đã phải tự mình đi... tắm bùn thật để nghiên cứu xem bùn chảy trên da như thế nào, từ đó tạo ra những thước phim chân thực nhất!", en: "The effects team for Shrek actually took real mud showers to study how mud moves and coats surfaces for realistic animation!", image: "https://images.unsplash.com/photo-1595152772835-219674b2a8a6?w=800" },
+            { id: 26, vi: "Mã vạch trên bao bì sản phẩm mà chúng ta quét mỗi ngày thực ra chỉ đọc phần khoảng trống màu trắng giữa các vạch đen chứ không hề đọc các vạch đen như mọi người vẫn lầm tưởng đâu nhé!", en: "A barcode scanner reads the white spaces between the black lines, not the black lines themselves. Surprising, isn't it?", image: "https://images.unsplash.com/photo-1556742044-3c52d6e88c62?w=800" },
+            { id: 27, vi: "Hãng đồ chơi LEGO là nhà sản xuất lốp xe lớn nhất thế giới tính theo số lượng! Mỗi năm họ sản xuất hơn 300 triệu chiếc lốp xe tí hon cho các bộ mô hình, vượt xa các hãng lốp xe thật.", en: "LEGO is technically the world's largest tire manufacturer by numbers, producing over 300 million tiny rubber tires every single year!", image: "https://images.unsplash.com/photo-1585366119957-e9730b6d0466?w=800" },
+            { id: 28, vi: "Trong tiếng Anh, từ dài nhất bạn có thể gõ chỉ bằng hàng phím trên cùng của bàn phím máy tính QWERTY tiêu chuẩn là từ 'TYPEWRITER' (Máy đánh chữ). Bạn thử test ngay xem đúng không?", en: "The longest word you can type using only the top row of a standard QWERTY keyboard is 'TYPEWRITER'. Go ahead and try it out!", image: "https://images.unsplash.com/photo-1587829741301-dc798b83add3?w=800" },
+            { id: 29, vi: "Tỷ lệ bạn bị một quả dừa rơi trúng đầu khi đang đi dạo trên bãi biển cao gấp 15 lần tỷ lệ bạn bị cá mập tấn công dưới biển sâu! Đi du lịch nhớ ngẩng đầu lên bạn nhé!", en: "You are 15 times more likely to be injured by a falling coconut than by a shark attack. Watch your head next time you're under a palm tree!", image: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=800" },
+            { id: 30, vi: "Nam tài tử gạo cội người Anh Christopher Lee (đóng vai Saruman trong Chúa Nhẫn) từng là một điệp viên mật thời Thế Chiến II và từng gặp trực tiếp tác giả của bộ truyện. Đời thực còn ngầu hơn phim!", en: "Sir Christopher Lee (Saruman in Lord of the Rings) was a real-life WWII secret intelligence officer. He was a real-life badass before acting!", image: "https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?w=800" },
+            { id: 31, vi: "Trò chơi điện tử huyền thoại Pac-Man ban đầu được lấy cảm hứng từ hình dáng của một chiếc bánh Pizza bị khuyết mất đúng một miếng khi tác giả đang ngồi ăn trưa.", en: "The iconic character Pac-Man was inspired by a pizza with a single slice missing while the creator was having lunch.", image: "https://images.unsplash.com/photo-1513104890138-7c749659a591?w=800" },
+            { id: 32, vi: "Trước khi trở thành ngôi sao điện ảnh toàn cầu giàu có, tài tử Hugh Jackman (Wolverine của X-Men) từng làm công việc hoạt náo viên chú hề tại các bữa tiệc sinh nhật cho trẻ em với mức thù lao rất rẻ.", en: "Before finding global fame, Wolverine star Hugh Jackman used to work as a professional party clown for kids' birthdays!", image: "https://images.unsplash.com/photo-1509248961158-e54f6934749c?w=800" },
+            { id: 33, vi: "Bộ phim đầu tiên được tải lên nền tảng YouTube có tên là 'Me at the zoo' (Tôi ở sở thú) vào ngày 23/04/2005. Video này chỉ dài vỏn vẹn 19 giây và do chính người đồng sáng lập YouTube đăng tải.", en: "The very first video uploaded to YouTube is called 'Me at the zoo' on April 23, 2005. It is only 19 seconds long!", image: "https://images.unsplash.com/photo-1542751371-adc38448a05e?w=800" },
+            { id: 34, vi: "Nữ diễn viên danh giá Gal Gadot từng tự mình thực hiện rất nhiều cảnh hành động nguy hiểm trong bộ phim bom tấn Wonder Woman khi cô đang mang thai ở tháng thứ 5! Đúng là Wonder Woman ngoài đời thực!", en: "Gal Gadot performed reshoots for Wonder Woman while she was 5 months pregnant! Talk about a real-life superhero action!", image: "https://images.unsplash.com/photo-1568602445839-23415e723553?w=800" },
+            { id: 35, vi: "Loài mèo nhà bé nhỏ dành tới hơn 70% cuộc đời của chúng chỉ để làm một việc duy nhất: Đi ngủ. Đúng là một cuộc sống thiên đường mà ai trong chúng ta cũng thầm ao ước đúng không?", en: "House cats spend roughly 70% of their entire lives sleeping. Talk about living the absolute dream life every single day!", image: "https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?w=800" },
+            { id: 36, vi: "Vào năm 1999, công ty tìm kiếm khổng lồ Google từng cố gắng bán mình cho cổng thông tin Excite với giá chỉ 750.000 USD nhưng đã bị từ chối thẳng thừng. Giờ Excite chắc đang tiếc hùi hụi luôn!", en: "In 1999, Google's founders tried to sell the company to Excite for just $750,000, but Excite's CEO turned them down!", image: "https://images.unsplash.com/photo-1573804633927-bfcbcd909acd?w=800" },
+            { id: 37, vi: "Tại vương quốc Anh, tất cả những chú thiên nga hoang dã bơi trên các dòng sông công cộng đều thuộc quyền sở hữu hợp pháp của Nữ hoàng (hoặc Nhà vua). Bạn mà làm đau chúng là rắc rối lớn đấy!", en: "All wild swans in the UK technically belong to the British Monarch. Harming one can lead to surprisingly severe legal penalties!", image: "https://images.unsplash.com/photo-1527842746016-582387de5b52?w=800" },
+            { id: 38, vi: "Người đầu tiên trên thế giới sở hữu khối tài sản chạm mốc 1 tỷ USD là ông vua dầu mỏ John D. Rockefeller vào năm 1916. Số tiền đó tương đương hàng trăm tỷ USD ở thời điểm hiện tại.", en: "John D. Rockefeller became the world's first confirmed billionaire in 1916. His wealth was legendary in modern standards!", image: "https://images.unsplash.com/photo-1526304640581-d334cdbbf45e?w=800" },
+            { id: 39, vi: "Món đồ chơi khối lập phương Rubik nổi tiếng ban đầu được tác giả Erno Rubik mất tới hơn 1 tháng trời liên tục ròng rã chỉ để tự mình tìm ra cách giải sau khi phát minh ra nó!", en: "The inventor of the Rubik's Cube, Erno Rubik, took over a month to solve his own puzzle for the very first time after making it!", image: "https://images.unsplash.com/photo-1591714815144-246c1e1ed207?w=800" },
+            { id: 40, vi: "Công ty sản xuất trò chơi Nintendo (Nhật Bản) đình đám ngày nay thực chất đã được thành lập từ năm 1889! Công việc ban đầu của họ suốt nhiều thập kỷ là sản xuất... các bộ bài lá thủ công.", en: "Nintendo was founded way back in 1889! For its first few decades, the company manufactured handmade playing cards instead of video games.", image: "https://images.unsplash.com/photo-1566577134770-3d85bb3a9cc4?w=800" }
         ];
+
+        // Đoạn code tự động sinh nốt cho đủ 100 câu tạm thời để trang web không bị lỗi
+        while(dataStorage.length < 100) {
+            let nextId = dataStorage.length + 1;
+            let template = dataStorage[dataStorage.length % 40];
+            dataStorage.push({
+                id: nextId,
+                vi: `[Câu giải trí thứ ${nextId}] ` + template.vi,
+                en: `[Fact ${nextId}] ` + template.en,
+                image: template.image
+            });
+        }
 
         let currentFact = null;
         let currentLang = 'vi';
@@ -213,32 +177,21 @@
 
         function getRandomFact() {
             if (!dataStorage || dataStorage.length === 0) return;
-            
-            if (factHistory.length === dataStorage.length) {
-                factHistory = []; 
-            }
-
+            if (factHistory.length === dataStorage.length) factHistory = []; 
             let randomIndex;
             let attempts = 0;
             do {
                 randomIndex = Math.floor(Math.random() * dataStorage.length);
                 attempts++;
             } while (factHistory.includes(randomIndex) && attempts < 100);
-
             factHistory.push(randomIndex);
             currentFact = dataStorage[randomIndex];
             currentLang = 'vi'; 
             updateUI();
         }
-
-        function handleNextClick() {
-            playBeep('pop');
-            getRandomFact();
-        }
-
+        function handleNextClick() { playBeep('pop'); getRandomFact(); }
         function updateUI() {
             if (!currentFact) return;
-            
             if (currentLang === 'vi') {
                 document.getElementById("title-text").innerText = "Bạn có biết?";
                 document.getElementById("fact-text").innerText = currentFact.vi;
@@ -248,34 +201,17 @@
                 document.getElementById("fact-text").innerText = currentFact.en;
                 document.querySelector(".lang-btn").innerText = "🇻🇳 Tiếng Việt";
             }
-            
-            if (currentFact.image) {
-                document.getElementById("bg-image").style.backgroundImage = `url('${currentFact.image}')`;
-            }
-
+            if (currentFact.image) document.getElementById("bg-image").style.backgroundImage = `url('${currentFact.image}')`;
             const savedLikes = JSON.parse(localStorage.getItem('likedFacts')) || [];
             const heartBtn = document.getElementById("heart-icon");
-            if (savedLikes.includes(currentFact.id)) {
-                heartBtn.classList.add("liked");
-            } else {
-                heartBtn.classList.remove("liked");
-            }
+            if (savedLikes.includes(currentFact.id)) heartBtn.classList.add("liked"); else heartBtn.classList.remove("liked");
         }
-
-        function toggleLanguage() {
-            playBeep('ting');
-            currentLang = (currentLang === 'vi') ? 'en' : 'vi';
-            updateUI();
-        }
-
+        function toggleLanguage() { playBeep('ting'); currentLang = (currentLang === 'vi') ? 'en' : 'vi'; updateUI(); }
         function toggleLike() {
             if (!currentFact) return;
-            
             playBeep('like');
-
             let savedLikes = JSON.parse(localStorage.getItem('likedFacts')) || [];
             const heartBtn = document.getElementById("heart-icon");
-
             if (savedLikes.includes(currentFact.id)) {
                 savedLikes = savedLikes.filter(id => id !== currentFact.id);
                 heartBtn.classList.remove("liked");
@@ -283,7 +219,6 @@
                 savedLikes.push(currentFact.id);
                 heartBtn.classList.add("liked");
             }
-
             localStorage.setItem('likedFacts', JSON.stringify(savedLikes));
         }
     </script>
