@@ -91,14 +91,35 @@
 </head>
 <body>
 
-    <div id="audio-unlock-overlay">
-        <h2>Chào mừng bạn đến với FactNhanh</h2>
-        <p style="margin-top: 10px; color: #ccc;">Sẵn sàng khám phá những sự thật thú vị?</p>
-        <button class="start-btn" onclick="startApp()">BẮT ĐẦU NGAY</button>
+   <div id="audio-unlock-overlay" style="
+        position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+        background: linear-gradient(135deg, #111e25 0%, #081015 100%); z-index: 9999;
+        display: flex; flex-direction: column; justify-content: center; align-items: center;
+        color: white; text-align: center; padding: 20px; font-family: 'Segoe UI', sans-serif;">
+        
+        <div style="font-size: 4rem; margin-bottom: 10px; animation: pulse 2s infinite;">💡</div>
+        
+        <h1 style="font-size: 1.8rem; font-weight: bold; letter-spacing: 1px; color: #ffd700;">FactNhanh</h1>
+        <p style="margin-top: 10px; font-size: 1rem; color: #a0aec0; max-width: 300px; line-height: 1.5;">
+            Khám phá kho tàng sự thật thú vị thế giới song ngữ đầy sống động
+        </p>
+        
+        <button class="start-btn" onclick="startApp()" style="
+            background: linear-gradient(90deg, #00bcd4, #00acc1); color: white; border: none; 
+            padding: 16px 45px; font-size: 1.1rem; font-weight: bold; border-radius: 50px; 
+            cursor: pointer; margin-top: 30px; box-shadow: 0 6px 20px rgba(0, 188, 212, 0.4); 
+            transition: transform 0.2s, box-shadow 0.2s;">
+            Bắt đầu khám phá →
+        </button>
     </div>
 
-    <div id="bg-image"></div>
-    <div class="overlay"></div>
+    <style>
+        @keyframes pulse {
+            0% { transform: scale(1); opacity: 0.8; }
+            50% { transform: scale(1.1); opacity: 1; text-shadow: 0 0 20px #ffd700; }
+            100% { transform: scale(1); opacity: 0.8; }
+        }
+    </style>
 
     <div class="container">
         <div class="fact-box">
