@@ -25,67 +25,59 @@
             background: rgba(255, 255, 255, 0.12);
             backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px);
             border: 1px solid rgba(255, 255, 255, 0.2);
-            padding: 40px 25px 35px 25px; border-radius: 24px;
+            padding: 30px 20px; border-radius: 24px;
             max-width: 600px; width: 100%; color: white;
             box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
-            margin-bottom: 25px; position: relative;
+            margin-bottom: 25px;
         }
-        .fact-box h2 { font-size: 1.3rem; margin-bottom: 15px; text-transform: uppercase; letter-spacing: 2px; color: #ffd700; }
-        .fact-box p { font-size: 1.15rem; line-height: 1.6; min-height: 140px; display: flex; align-items: center; justify-content: center; }
-        .action-header { position: absolute; top: 15px; right: 20px; display: flex; gap: 10px; align-items: center; }
+        
+        /* Hàng tiêu đề thông minh: Tự chia không gian trên cả Máy tính lẫn Điện thoại */
+        .action-header { 
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            margin-bottom: 20px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+        }
+        .action-header h2 { 
+            font-size: 1.15rem; 
+            text-transform: uppercase; 
+            letter-spacing: 1px; 
+            color: #ffd700; 
+            margin: 0;
+            text-align: left;
+            font-weight: bold;
+        }
+        .buttons-group {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
         .lang-btn {
             background: rgba(255, 255, 255, 0.2); border: 1px solid rgba(255, 255, 255, 0.3);
             color: white; padding: 6px 12px; font-size: 0.85rem; border-radius: 20px; cursor: pointer; transition: 0.2s;
+            white-space: nowrap;
         }
         .lang-btn:hover { background: rgba(255, 255, 255, 0.4); }
+        
         .heart-btn {
             background: rgba(255, 255, 255, 0.2); border: 1px solid rgba(255, 255, 255, 0.3);
             color: white; width: 32px; height: 32px; font-size: 1rem; border-radius: 50%; cursor: pointer;
             display: flex; align-items: center; justify-content: center; transition: 0.2s;
         }
         .heart-btn.liked { background: rgba(233, 30, 99, 0.2); border-color: #e91e63; color: #ff4081; transform: scale(1.1); }
+        
+        .fact-box p { font-size: 1.15rem; line-height: 1.6; min-height: 140px; display: flex; align-items: center; justify-content: center; }
+        
         .next-btn {
             background: #00bcd4; color: white; border: none; padding: 16px 40px; font-size: 1.1rem; font-weight: bold;
             border-radius: 50px; cursor: pointer; box-shadow: 0 4px 20px rgba(0, 188, 212, 0.4); transition: 0.2s;
         }
         .next-btn:hover { background: #00acc1; transform: scale(1.05); }
         @keyframes pulse { 0% { transform: scale(1); opacity: 0.8; } 50% { transform: scale(1.1); opacity: 1; text-shadow: 0 0 20px #ffd700; } 100% { transform: scale(1); opacity: 0.8; } }
-        /* Khung header bọc cả tiêu đề lẫn nút */
-.card-header {
-    display: flex !important;
-    justify-content: space-between !important;
-    align-items: center !important;
-    width: 100% !important;
-    margin-bottom: 20px !important;
-    padding-bottom: 10px !important;
-}
-
-/* Định dạng lại chữ tiêu đề */
-.card-title {
-    font-size: 1.2rem !important;
-    color: #FFD700 !important;
-    margin: 0 !important;
-    font-weight: bold !important;
-}
-
-/* Cụm chứa các nút action bên phải */
-.card-actions {
-    display: flex !important;
-    align-items: center !important;
-    gap: 10px !important;
-}
-
-/* Đưa các nút về vị trí tự nhiên, không cho chồng chéo nữa */
-.btn-translate, .card-actions button {
-    position: static !important; 
-    padding: 6px 12px !important;
-    background: rgba(255, 255, 255, 0.2) !important;
-    border: 1px solid rgba(255, 255, 255, 0.4) !important;
-    border-radius: 20px !important;
-    color: white !important;
-    font-size: 0.85rem !important;
-    white-space: nowrap !important;
-}
     </style>
 </head>
 <body>
@@ -103,15 +95,12 @@
     <div class="container">
         <div class="fact-box">
             <div class="action-header">
-                <button id="heart-icon" class="heart-btn" onclick="toggleLike()">♥</button>
-                <button class="lang-btn" onclick="toggleLanguage()">🇬🇧 Translate</button>
+                <h2 id="title-text">Bạn có biết?</h2>
+                <div class="buttons-group">
+                    <button id="heart-icon" class="heart-btn" onclick="toggleLike()">♥</button>
+                    <button class="lang-btn" onclick="toggleLanguage()">🇬🇧 Translate</button>
+                </div>
             </div>
-            <div class="card-header">
-    <h2 class="card-title">BẠN CÓ BIẾT?</h2>
-    <div class="card-actions">
-        <button class="btn-heart">❤️</button> 
-        <button class="btn-translate">🇬🇧 Translate</button>
-</div>
             <p id="fact-text">Đang tải...</p>
         </div>
         <button class="next-btn" onclick="handleNextClick()">Câu chuyện tiếp theo →</button>
@@ -156,7 +145,7 @@
             } catch (e) {}
         }
 
-        // PHẦN 1: TẬP HỢP 40 CÂU ĐẦU TIÊN ĐÃ BIÊN SOẠN RIÊNG BIỆT
+        // KHO DỮ LIỆU ĐỦ 100 CÂU THÚ VỊ ĐÃ BIÊN SOẠN THỦ CÔNG
         const dataStorage = [
             { id: 1, vi: "Usain Bolt giữ kỷ lục chạy 100m thế giới với 9,58 giây. Nghĩa là mỗi lần bạn chớp mắt một cái, anh ấy đã phóng đi được hơn 10 mét rồi. Quá khủng khiếp phải không?", en: "Usain Bolt's 100m record is 9.58 seconds. Every time you blink once, he has already sprinted over 10 meters! Mind-blowing, right?", image: "https://images.unsplash.com/photo-1461896836934-ffe607ba8211?w=800" },
             { id: 2, vi: "Trong suốt cuộc đời, một người đàn ông trưởng thành sản sinh lượng tinh dịch đủ để lấp đầy 3 hồ chứa lớn dung tích 100 mét khối mỗi hồ! Bạn có bất ngờ về con số khổng lồ này không?", en: "Throughout life, an adult man produces enough semen to fill 3 large reservoirs of 100 cubic meters each! Are you surprised by this massive number?", image: "https://images.unsplash.com/photo-1576086213369-97a306d36557?w=800" },
@@ -165,7 +154,7 @@
             { id: 5, vi: "Bài hát quốc dân 'Gangnam Style' của PSY từng hot đến mức làm sập luôn bộ đếm lượt xem của YouTube vào năm 2014, buộc các kỹ sư Google phải lập tức viết lại code hệ thống!", en: "PSY's 'Gangnam Style' was so hot it broke YouTube's view counter in 2014, forcing Google engineers to rewrite the system's core code!", image: "https://images.unsplash.com/photo-1514525253161-7a46d19cd819?w=800" },
             { id: 6, vi: "Chú chuột Mickey quyền lực của nhà Disney thực chất chỉ có 4 ngón tay. Lý do là vì các họa sĩ thời đó muốn tiết kiệm thời gian vẽ và hàng triệu USD chi phí sản xuất!", en: "Disney's Mickey Mouse actually has only 4 fingers. The reason was to save animators' drawing time and millions of dollars in production costs!", image: "https://images.unsplash.com/photo-1608889175123-8ec330b86f84?w=800" },
             { id: 7, vi: "Trong phim Titanic, chi phí để xây dựng lại con tàu mô hình phục vụ cho việc quay phim còn đắt đỏ hơn cả chi phí thực tế để đóng con tàu Titanic thật ngoài đời vào năm 1912!", en: "In the movie Titanic, the cost to construct the prop ship was actually more expensive than the cost to build the real Titanic ship back in 1912!", image: "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?w=800" },
-            { id: 8, vi: "Nước ép dứa chứa enzyme phân hủy protein. Về cơ bản, khi bạn đang nhai dứa ngon lành thì quả dứa cũng đang tìm cách 'ăn thịt' ngược lại khoang miệng của bạn đó!", en: "Pineapple juice contains enzymes that digest protein. Basically, while you are chewing a pineapple, it is trying to eat your mouth back!", image: "https://images.unsplash.com/photo-1550258987-190a2d41a8ba?w=800" },
+            { id: 8, vi: "Nước ép dứa chứa enzyme phân hủy protein. Về cơ bản, khi bạn đang nhai dứa ngon lành thì quả dứa cũng đang tìm cách 'ăn thịt' ngược lại khoang miệng của bạn đó!", en: "Pineapple juice contains enzymes that digest protein. Basically, while you are chewing a pineapple, it is trying to eat your mouth back!", image: "https://images.unsplash.com/photo-1550258987-190a2d41a8ba +07ba8211?w=800" },
             { id: 9, vi: "Ốc sên là bậc thầy ngủ nướng! Nếu thời tiết quá khô hạn hoặc khắc nghiệt, chúng có thể đi ngủ một mạch liên tục suốt 3 năm trời mà không cần ăn uống gì.", en: "Snails are the ultimate sleep masters! If the weather is too dry, they can go to sleep for 3 straight years without eating anything.", image: "https://images.unsplash.com/photo-1533105079780-92b9be482077?w=800" },
             { id: 10, vi: "Loài sứa bất tử có khả năng tự quay ngược vòng đời từ dạng trưởng thành về lại dạng em bé sơ sinh khi gặp nguy hiểm. Đúng là cải lão hoàn đồng ngoài đời thực!", en: "The immortal jellyfish can reset its life cycle from adulthood back to a newborn polyp state when threatened. Real-life reverse aging!", image: "https://images.unsplash.com/photo-1564419320461-6870880221ad?w=800" },
             { id: 11, vi: "Trọng lượng của một đám mây trắng bồng bềnh tương đương với khoảng 100 con voi trưởng thành gộp lại! Bạn thấy nó còn nhẹ nhàng nữa không?", en: "An average fluffy white cloud weighs about the same as 100 fully-grown elephants combined! Do you still think it looks light?", image: "https://images.unsplash.com/photo-1534274988757-a28bf1a57c17?w=800" },
@@ -184,7 +173,7 @@
             { id: 24, vi: "Bạn có biết âm thanh rùng rợn của loài khủng long bạo chúa T-Rex trong bộ phim Công viên kỷ Jura huyền thoại thực chất được tạo ra từ tiếng... gầm gừ của một chú chó con phối hợp với tiếng cá voi?", en: "The terrifying roar of the T-Rex in Jurassic Park was actually created by mixing the sounds of a baby elephant, an alligator, and a tiger!", image: "https://images.unsplash.com/photo-1569336415962-a4bd9f69cd83?w=800" },
             { id: 25, vi: "Khi xem phim hoạt hình Shrek, ít ai biết rằng đoàn làm phim đã phải tự mình đi... tắm bùn thật để nghiên cứu xem bùn chảy trên da như thế nào, từ đó tạo ra những thước phim chân thực nhất!", en: "The effects team for Shrek actually took real mud showers to study how mud moves and coats surfaces for realistic animation!", image: "https://images.unsplash.com/photo-1595152772835-219674b2a8a6?w=800" },
             { id: 26, vi: "Mã vạch trên bao bì sản phẩm mà chúng ta quét mỗi ngày thực ra chỉ đọc phần khoảng trống màu trắng giữa các vạch đen chứ không hề đọc các vạch đen như mọi người vẫn lầm tưởng đâu nhé!", en: "A barcode scanner reads the white spaces between the black lines, not the black lines themselves. Surprising, isn't it?", image: "https://images.unsplash.com/photo-1556742044-3c52d6e88c62?w=800" },
-            { id: 27, vi: "Hãng đồ chơi LEGO là nhà sản xuất lốp xe lớn nhất thế giới tính theo số lượng! Mỗi năm họ sản xuất hơn 300 triệu chiếc lốp xe tí hon cho các bộ mô hình, vượt xa các hãng lốp xe thật.", en: "LEGO is technically the world's largest tire manufacturer by numbers, producing over 300 million tiny rubber tires every single year!", image: "https://images.unsplash.com/photo-1585366119957-e9730b6d0466?w=800" },
+            { id: 27, vi: "Hãng đồ chơi LEGO là nhà sản xuất lốp xe lớn nhất thế giới tính theo số lượng! Mỗi năm họ sản xuất hơn 300 million chiếc lốp xe tí hon cho các bộ mô hình, vượt xa các hãng lốp xe thật.", en: "LEGO is technically the world's largest tire manufacturer by numbers, producing over 300 million tiny rubber tires every single year!", image: "https://images.unsplash.com/photo-1585366119957-e9730b6d0466?w=800" },
             { id: 28, vi: "Trong tiếng Anh, từ dài nhất bạn có thể gõ chỉ bằng hàng phím trên cùng của bàn phím máy tính QWERTY tiêu chuẩn là từ 'TYPEWRITER' (Máy đánh chữ). Bạn thử test ngay xem đúng không?", en: "The longest word you can type using only the top row of a standard QWERTY keyboard is 'TYPEWRITER'. Go ahead and try it out!", image: "https://images.unsplash.com/photo-1587829741301-dc798b83add3?w=800" },
             { id: 29, vi: "Tỷ lệ bạn bị một quả dừa rơi trúng đầu khi đang đi dạo trên bãi biển cao gấp 15 lần tỷ lệ bạn bị cá mập tấn công dưới biển sâu! Đi du lịch nhớ ngẩng đầu lên bạn nhé!", en: "You are 15 times more likely to be injured by a falling coconut than by a shark attack. Watch your head next time you're under a palm tree!", image: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=800" },
             { id: 30, vi: "Nam tài tử gạo cội người Anh Christopher Lee (đóng vai Saruman trong Chúa Nhẫn) từng là một điệp viên mật thời Thế Chiến II và từng gặp trực tiếp tác giả của bộ truyện. Đời thực còn ngầu hơn phim!", en: "Sir Christopher Lee (Saruman in Lord of the Rings) was a real-life WWII secret intelligence officer. He was a real-life badass before acting!", image: "https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?w=800" },
@@ -194,7 +183,7 @@
             { id: 34, vi: "Nữ diễn viên danh giá Gal Gadot từng tự mình thực hiện rất nhiều cảnh hành động nguy hiểm trong bộ phim bom tấn Wonder Woman khi cô đang mang thai ở tháng thứ 5! Đúng là Wonder Woman ngoài đời thực!", en: "Gal Gadot performed reshoots for Wonder Woman while she was 5 months pregnant! Talk about a real-life superhero action!", image: "https://images.unsplash.com/photo-1568602445839-23415e723553?w=800" },
             { id: 35, vi: "Loài mèo nhà bé nhỏ dành tới hơn 70% cuộc đời của chúng chỉ để làm một việc duy nhất: Đi ngủ. Đúng là một cuộc sống thiên đường mà ai trong chúng ta cũng thầm ao ước đúng không?", en: "House cats spend roughly 70% of their entire lives sleeping. Talk about living the absolute dream life every single day!", image: "https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?w=800" },
             { id: 36, vi: "Vào năm 1999, công ty tìm kiếm khổng lồ Google từng cố gắng bán mình cho cổng thông tin Excite với giá chỉ 750.000 USD nhưng đã bị từ chối thẳng thừng. Giờ Excite chắc đang tiếc hùi hụi luôn!", en: "In 1999, Google's founders tried to sell the company to Excite for just $750,000, but Excite's CEO turned them down!", image: "https://images.unsplash.com/photo-1573804633927-bfcbcd909acd?w=800" },
-            { id: 37, vi: "Tại vương quốc Anh, tất cả những chú thiên swans hoang dã bơi trên các dòng sông công cộng đều thuộc quyền sở hữu hợp pháp của Nữ hoàng (hoặc Nhà vua). Bạn mà làm đau chúng là rắc rối lớn đấy!", en: "All wild swans in the UK technically belong to the British Monarch. Harming one can lead to surprisingly severe legal penalties!", image: "https://images.unsplash.com/photo-1527842746016-582387de5b52?w=800" },
+            { id: 37, vi: "Tại vương quốc Anh, tất cả những chú thiên nga hoang dã bơi trên các dòng sông công cộng đều thuộc quyền sở hữu hợp pháp của Nữ hoàng (hoặc Nhà vua). Bạn mà làm đau chúng là rắc rối lớn đấy!", en: "All wild swans in the UK technically belong to the British Monarch. Harming one can lead to surprisingly severe legal penalties!", image: "https://images.unsplash.com/photo-1527842746016-582387de5b52?w=800" },
             { id: 38, vi: "Người đầu tiên trên thế giới sở hữu khối tài sản chạm mốc 1 tỷ USD là ông vua dầu mỏ John D. Rockefeller vào năm 1916. Số tiền đó tương đương hàng trăm tỷ USD ở thời điểm hiện tại.", en: "John D. Rockefeller became the world's first confirmed billionaire in 1916. His wealth was legendary in modern standards!", image: "https://images.unsplash.com/photo-1526304640581-d334cdbbf45e?w=800" },
             { id: 39, vi: "Món đồ chơi khối lập phương Rubik nổi tiếng ban đầu được tác giả Erno Rubik mất tới hơn 1 tháng trời liên tục ròng rã chỉ để tự mình tìm ra cách giải sau khi phát minh ra nó!", en: "The inventor of the Rubik's Cube, Erno Rubik, took over a month to solve his own puzzle for the very first time after making it!", image: "https://images.unsplash.com/photo-1591714815144-246c1e1ed207?w=800" },
             { id: 40, vi: "Công ty sản xuất trò chơi Nintendo (Nhật Bản) đình đám ngày nay thực chất đã được thành lập từ năm 1889! Công việc ban đầu của họ suốt nhiều thập kỷ là sản xuất... các bộ bài lá thủ công.", en: "Nintendo was founded way back in 1889! For its first few decades, the company manufactured handmade playing cards instead of video games.", image: "https://images.unsplash.com/photo-1566577134770-3d85bb3a9cc4?w=800" },
@@ -208,7 +197,7 @@
             { id: 48, vi: "Leonardo DiCaprio nổi tiếng với khả năng diễn xuất đỉnh cao, nhưng bạn biết không? Trong cảnh phim quay ở bàn ăn của bộ phim 'Django Unchained', anh đã vô tình đập tay làm vỡ một chiếc cốc thủy tinh thật, máu chảy đầm đìa nhưng vẫn tiếp tục diễn không hề ngừng lại!", en: "In Django Unchained, Leonardo DiCaprio accidentally smashed his hand on a glass, bleeding heavily, but ignored it and kept acting!", image: "https://images.unsplash.com/photo-1594909122845-11baa439b7bf?w=800" },
             { id: 49, vi: "Biểu tượng nhạc Pop Michael Jackson từng cố gắng mua lại hãng phim Marvel vào những năm 1990 chỉ vì một lý do cực kỳ dễ thương: Ông muốn tự mình đóng vai chính Spider-Man (Người Nhện) trong phim!", en: "Pop legend Michael Jackson tried to buy Marvel Comics in the 1990s because he passionately wanted to star as Spider-Man himself!", image: "https://images.unsplash.com/photo-1635805737707-575885ab0820?w=800" },
             { id: 50, vi: "Ban nhạc huyền thoại The Beatles thực chất không một ai trong số 4 thành viên biết đọc hay biết viết nhạc lý theo các nốt nhạc tiêu chuẩn! Họ sáng tác hoàn toàn bằng tai và bằng cảm âm tự nhiên thuần túy.", en: "None of the members of the legendary band The Beatles could actually read or write traditional sheet music! They composed entirely by ear.", image: "https://images.unsplash.com/photo-1511192336575-5a79af67a629?w=800" },
-            { id: 51, vi: "Hãng phim hoạt hình Pixar có một truyền thống cực kỳ thú vị: Họ luôn giấu mật mã 'A113' trong hầu hết tất cả các bộ phim của mình (Toy Story, Cars, Finding Nemo...). Đó thực ra là số phòng học đồ họa của các đạo diễn thời sinh viên!", en: "Pixar animators secretly hide the code 'A113' in almost all of their movies. It was the classroom number where they learned graphic design!", image: "https://images.unsplash.com/photo-1627856013091-fed6e4e30025?w=800" },
+            { id: 51, vi: "Hãng phim hoạt hình Pixar có một truyền thú vị: Họ luôn giấu mật mã 'A113' trong hầu hết tất cả các bộ phim của mình (Toy Story, Cars, Finding Nemo...). Đó thực ra là số phòng học đồ họa của các đạo diễn thời sinh viên!", en: "Pixar animators secretly hide the code 'A113' in almost all of their movies. It was the classroom number where they learned graphic design!", image: "https://images.unsplash.com/photo-1627856013091-fed6e4e30025?w=800" },
             { id: 52, vi: "Trong phim Iron Man 1, bộ giáp đầu tiên của Tony Stark được thiết kế rắc rối đến mức đoàn làm phim phải lắp ráp thủ công từ hơn 450 mảnh ghép riêng biệt! Đúng là siêu phẩm công nghệ từ đời thực bước lên màn ảnh.", en: "In the first Iron Man movie, Tony Stark's physical armor suit was composed of over 450 individual pieces for the actor to wear!", image: "https://images.unsplash.com/photo-1608889174637-3c99800e1791?w=800" },
             { id: 53, vi: "Nữ văn sĩ J.K. Rowling từng bị từ chối bởi tận 12 nhà xuất bản khác nhau khi bà mang bản thảo tập đầu tiên của 'Harry Potter' đi nộp. Giờ đây, loạt truyện này đã trở thành một trong những thương hiệu đắt giá nhất hành tinh!", en: "J.K. Rowling's original Harry Potter manuscript was rejected by 12 different publishers before finally getting accepted!", image: "https://images.unsplash.com/photo-1543002588-bfa74002ed7e?w=800" },
             { id: 54, vi: "Loạt phim đình đám 'Trò chơi vương quyền' (Game of Thrones) đã sử dụng một lượng thịt nhân tạo và hơn 15.000 lít máu giả chỉ để phục vụ cho các cảnh quay chiến đấu hoành tráng trong suốt các mùa phim!", en: "The hit TV series Game of Thrones used over 15,000 liters of fake blood to film its epic and brutal battle scenes throughout the seasons!", image: "https://images.unsplash.com/photo-1578301978693-85fa9c0320b9?w=800" },
@@ -259,7 +248,6 @@
             { id: 99, vi: "Nhà bác học thiên tài Albert Einstein trước khi qua đời đã nói những lời trăn trối cuối cùng bằng tiếng Đức với một cô y tá người Mỹ. Ngặt một nỗi, cô y tá đó không hề biết một chữ tiếng Đức nào, và bí mật đó đã mãi mãi biến mất!", en: "Albert Einstein's final words were spoken in German to an American nurse who didn't understand the language, leaving them a mystery forever!", image: "https://images.unsplash.com/photo-1576086213369-97a306d36557?w=800" },
             { id: 100, vi: "Và sự thật số 100 chính là: Bạn vừa hoàn thành việc khám phá toàn bộ 100 sự thật độc lạ nhất hành tinh cùng FactNhanh rồi đấy! Bạn thấy sự thật nào làm bạn 'bật ngửa' và muốn chia sẻ với bạn bè nhất? Hãy thả tim ngay nhé!", en: "And the 100th fact is: You've just explored all 100 amazing facts with FactNhanh! Share your favorite one and spread the knowledge today!", image: "https://images.unsplash.com/photo-1461896836934-ffe607ba8211?w=800" }
         ];
-
 
         let currentFact = null;
         let currentLang = 'vi';
