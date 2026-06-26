@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FactNhanh - 100 Sự Thật Độc Lạ</title>
+    <title>FactNhanh - Sự Thật Độc Lạ</title>
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', sans-serif; }
         body, html { height: 100%; overflow: hidden; background: #000; }
@@ -50,6 +50,42 @@
         }
         .next-btn:hover { background: #00acc1; transform: scale(1.05); }
         @keyframes pulse { 0% { transform: scale(1); opacity: 0.8; } 50% { transform: scale(1.1); opacity: 1; text-shadow: 0 0 20px #ffd700; } 100% { transform: scale(1); opacity: 0.8; } }
+        /* Khung header bọc cả tiêu đề lẫn nút */
+.card-header {
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    width: 100% !important;
+    margin-bottom: 20px !important;
+    padding-bottom: 10px !important;
+}
+
+/* Định dạng lại chữ tiêu đề */
+.card-title {
+    font-size: 1.2rem !important;
+    color: #FFD700 !important;
+    margin: 0 !important;
+    font-weight: bold !important;
+}
+
+/* Cụm chứa các nút action bên phải */
+.card-actions {
+    display: flex !important;
+    align-items: center !important;
+    gap: 10px !important;
+}
+
+/* Đưa các nút về vị trí tự nhiên, không cho chồng chéo nữa */
+.btn-translate, .card-actions button {
+    position: static !important; 
+    padding: 6px 12px !important;
+    background: rgba(255, 255, 255, 0.2) !important;
+    border: 1px solid rgba(255, 255, 255, 0.4) !important;
+    border-radius: 20px !important;
+    color: white !important;
+    font-size: 0.85rem !important;
+    white-space: nowrap !important;
+}
     </style>
 </head>
 <body>
@@ -70,7 +106,12 @@
                 <button id="heart-icon" class="heart-btn" onclick="toggleLike()">♥</button>
                 <button class="lang-btn" onclick="toggleLanguage()">🇬🇧 Translate</button>
             </div>
-            <h2 id="title-text">Bạn có biết?</h2>
+            <div class="card-header">
+    <h2 class="card-title">BẠN CÓ BIẾT?</h2>
+    <div class="card-actions">
+        <button class="btn-heart">❤️</button> 
+        <button class="btn-translate">🇬🇧 Translate</button>
+</div>
             <p id="fact-text">Đang tải...</p>
         </div>
         <button class="next-btn" onclick="handleNextClick()">Câu chuyện tiếp theo →</button>
