@@ -431,18 +431,46 @@
         "image": "https://images.unsplash.com/photo-1506318137071-a8e063b4bec0?w=800"
     },
         ];
+function convertToSlug(text) {
+    return text
+        .toLowerCase()
+        .normalize('NFD')
+        .replace(/[\u0300-\u036f]/g, '')
+        .replace(/[đĐ]/g, 'd')
+        .replace(/([^a-z0-9\s- ]+)/g, '')
+        .replace(/[\s-]+/g, '-')
+        .trim();
+}
 
+function optimizeDataForSEO(originalList) {
+    return originalList.map(item => {
+        // Lấy 8 từ đầu làm tiêu đề cho ngắn gọn
+        const shortText = item.vi.split(' ').slice(0, 8).join(' ');
+        const generatedSlug = `${convertToSlug(shortText)}-${item.id}`;
+        const generatedDesc = item.vi.length > 145 ? item.vi.substring(0, 142) + '...' : item.vi;
+
+        return {
+            ...item,
+            slug: generatedSlug,
+            meta_title: `${shortText}... - Sự thật số ${item.id}`,
+            meta_description: generatedDesc
+        };
+    });
+}
+
+// Chuyển đổi mảng cũ thành mảng mới đầy đủ thuộc tính SEO
+const seoDataStorage = optimizeDataForSEO(dataStorage);
         let currentFact = null;
         let currentLang = 'vi';
         let factHistory = []; 
 
         function getRandomFact() {
-            if (!dataStorage || dataStorage.length === 0) return;
-            if (factHistory.length === dataStorage.length) factHistory = []; 
+            if (!seoDataStorage || seoDataStorage.length === 0) return;
+            if (factHistory.length === seoDataStorage.length) factHistory = []; 
             let randomIndex;
             let attempts = 0;
             do {
-                randomIndex = Math.floor(Math.random() * dataStorage.length);
+                randomIndex = Math.floor(Math.random() * seoDataStorage.length);
                 attempts++;
             } while (factHistory.includes(randomIndex) && attempts < 100);
             factHistory.push(randomIndex);
